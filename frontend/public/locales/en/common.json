@@ -1,0 +1,49 @@
+{
+  "navigation": {
+    "games": "Games",
+    "byAuthor": "by Burak Intisah",
+    "shuffle": "Shuffle"
+  },
+  "gameModes": {
+    "conversationCards": "Conversation Cards",
+    "conversationCardsDesc": "Deep, meaningful conversations with thought-provoking questions"
+  },
+  "decks": {
+    "relationships": {
+      "name": "Relationships",
+      "description": "Explore connections, love, and human bonds"
+    },
+    "family": {
+      "name": "Family", 
+      "description": "Navigate family dynamics and generational wisdom"
+    },
+    "life": {
+      "name": "Life",
+      "description": "Reflect on purpose, meaning, and personal growth"
+    },
+    "work": {
+      "name": "Work & Purpose",
+      "description": "Discover calling, creativity, and professional fulfillment"
+    },
+    "creativity": {
+      "name": "Creativity",
+      "description": "Unlock imagination, expression, and artistic spirit"
+    },
+    "growth": {
+      "name": "Personal Growth",
+      "description": "Journey of self-discovery and transformation"
+    }
+  },
+  "ui": {
+    "cards": "cards",
+    "tapToExplore": "Tap to explore",
+    "newQuestion": "New Question",
+    "imReady": "I'm Ready",
+    "takeYourTime": "Take your time to reflect and discuss",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    }
+  }
+} 

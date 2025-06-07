@@ -1,0 +1,49 @@
+{
+  "navigation": {
+    "games": "Oyunlar",
+    "byAuthor": "Burak Intisah tarafından",
+    "shuffle": "Karıştır"
+  },
+  "gameModes": {
+    "conversationCards": "Sohbet Kartları",
+    "conversationCardsDesc": "Düşündürücü sorularla derin ve anlamlı sohbetler"
+  },
+  "decks": {
+    "relationships": {
+      "name": "İlişkiler",
+      "description": "Bağlantıları, sevgiyi ve insan bağlarını keşfedin"
+    },
+    "family": {
+      "name": "Aile", 
+      "description": "Aile dinamiklerini ve nesiller arası bilgeliği keşfedin"
+    },
+    "life": {
+      "name": "Yaşam",
+      "description": "Amaç, anlam ve kişisel gelişim üzerine düşünün"
+    },
+    "work": {
+      "name": "İş ve Amaç",
+      "description": "Çağrı, yaratıcılık ve mesleki tatmini keşfedin"
+    },
+    "creativity": {
+      "name": "Yaratıcılık",
+      "description": "Hayal gücü, ifade ve sanatsal ruhu açığa çıkarın"
+    },
+    "growth": {
+      "name": "Kişisel Gelişim",
+      "description": "Kendini keşfetme ve dönüşüm yolculuğu"
+    }
+  },
+  "ui": {
+    "cards": "kart",
+    "tapToExplore": "Keşfetmek için dokunun",
+    "newQuestion": "Yeni Soru",
+    "imReady": "Hazırım",
+    "takeYourTime": "Düşünmek ve tartışmak için zaman ayırın",
+    "difficulty": {
+      "easy": "Kolay",
+      "medium": "Orta",
+      "hard": "Zor"
+    }
+  }
+} 
