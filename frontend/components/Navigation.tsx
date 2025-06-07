@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Gamepad2, Globe, ChevronDown, Shuffle } from 'lucide-react';
-import { SUPPORTED_LANGUAGES, GAME_MODES } from '../../shared/dist';
+import { SUPPORTED_LANGUAGES, GAME_MODES } from '../../shared/src';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 
 interface NavigationProps {

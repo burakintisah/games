@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Navigation } from './Navigation';
 import { QuestionModal } from './QuestionModal';
-import { CONVERSATION_DECKS, ConversationCard } from '../../shared/dist';
+import { CONVERSATION_DECKS, ConversationCard } from '../../shared/src';
 
 interface ClientPageWrapperProps {
   children: React.ReactNode;

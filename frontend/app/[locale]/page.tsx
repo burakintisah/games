@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Navigation } from '../../components/Navigation';
 import { DeckCard } from '../../components/DeckCard';
 import { QuestionModal } from '../../components/QuestionModal';
-import { CONVERSATION_DECKS } from '../../../shared/dist';
+import { CONVERSATION_DECKS } from '../../../shared/src';
 import { getTranslation } from '../../lib/i18n';
 import { ClientPageWrapper } from '../../components/ClientPageWrapper';
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import type { Deck } from '../../shared/dist';
+import type { Deck } from '../../shared/src';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 
 interface DeckCardProps {

@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, RefreshCw, CheckCircle } from 'lucide-react';
-import type { ConversationCard } from '../../shared/dist';
+import type { ConversationCard } from '../../shared/src';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 
 interface QuestionModalProps {
