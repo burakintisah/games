@@ -9,6 +9,7 @@ interface DeckCardProps {
   onClick: () => void;
   index: number;
   locale: string;
+  cardCount?: number; // Optional prop for API-provided card count
 }
 
 const getDeckTranslationKey = (deckId: string) => {
@@ -24,9 +25,12 @@ const getDeckTranslationKey = (deckId: string) => {
   return keyMap[deckId] || deckId;
 };
 
-export function DeckCard({ deck, onClick, index, locale }: DeckCardProps) {
+export function DeckCard({ deck, onClick, index, locale, cardCount }: DeckCardProps) {
   const { t } = useClientTranslation(locale);
   const translationKey = getDeckTranslationKey(deck.id);
+  
+  // Use API-provided count if available, otherwise fall back to static count
+  const displayCardCount = cardCount !== undefined ? cardCount : deck.cards.length;
 
   return (
     <motion.div
@@ -53,7 +57,7 @@ export function DeckCard({ deck, onClick, index, locale }: DeckCardProps) {
         </p>
         <div className="flex justify-between items-center">
           <span className="text-white/90 text-sm font-medium drop-shadow-sm">
-            {deck.cards.length} {t('ui.cards')}
+            {displayCardCount} {t('ui.cards')}
           </span>
           <motion.button
             className="bg-white/25 hover:bg-white/35 px-4 py-2 rounded-lg text-sm font-semibold transition-colors backdrop-blur-sm border border-white/20 text-white drop-shadow-sm"

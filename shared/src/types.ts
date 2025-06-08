@@ -13,6 +13,13 @@ export interface ConversationCard {
   category: string;
   difficulty: DifficultyLevel;
   tags: string[];
+  // Voting properties (optional for backward compatibility)
+  upvotes?: number;
+  downvotes?: number;
+  totalVotes?: number;
+  // Timestamps (optional, added by backend)
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ConversationDeck {

@@ -1,47 +1,102 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigation } from './Navigation';
 import { QuestionModal } from './QuestionModal';
-import { CONVERSATION_DECKS, ConversationCard } from '../../shared/src';
+import { LoadingSpinner } from './LoadingSpinner';
+import { ErrorMessage } from './ErrorMessage';
+import { useConversationCards } from '../hooks/useConversationCards';
+import type { ConversationCard, SupportedLanguage } from '../../shared/src';
 
 interface ClientPageWrapperProps {
   children: React.ReactNode;
   locale: string;
-  PageContent: React.ComponentType<{ locale: string; onDeckClick: (deckId: string) => void }>;
+  PageContent: React.ComponentType<{ 
+    locale: string; 
+    onDeckClick: (deckId: string) => void;
+    categoryCounts: Record<string, number>;
+    isLoadingCategories: boolean;
+  }>;
 }
 
 export function ClientPageWrapper({ children, locale, PageContent }: ClientPageWrapperProps) {
-  const [selectedQuestion, setSelectedQuestion] = useState<ConversationCard | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Use the conversation cards hook
+  const {
+    categoryCounts,
+    currentCard,
+    isLoadingCategories,
+    isLoadingCard,
+    categoryError,
+    cardError,
+    getRandomCard,
+    getRandomCardFromCategory,
+    voteOnCard,
+  } = useConversationCards();
 
-  const handleDeckClick = (deckId: string) => {
-    const deck = CONVERSATION_DECKS.find(d => d.id === deckId);
-    if (deck && deck.cards.length > 0) {
-      const randomQuestion = deck.cards[Math.floor(Math.random() * deck.cards.length)];
-      setSelectedQuestion(randomQuestion);
+  // Convert locale to supported language
+  const language: SupportedLanguage = locale === 'tr' ? 'tr' : 'en';
+
+  const handleDeckClick = async (deckId: string) => {
+    try {
+      await getRandomCardFromCategory(deckId, language);
       setIsModalOpen(true);
+    } catch (error) {
+      console.error('Failed to get random card from deck:', error);
     }
   };
 
-  const handleNewQuestion = () => {
-    if (selectedQuestion) {
-      const deck = CONVERSATION_DECKS.find(d => 
-        d.cards.some(q => q.category === selectedQuestion.category)
-      );
-      if (deck) {
-        const randomQuestion = deck.cards[Math.floor(Math.random() * deck.cards.length)];
-        setSelectedQuestion(randomQuestion);
+  const handleNewQuestion = async () => {
+    if (currentCard) {
+      try {
+        await getRandomCardFromCategory(currentCard.category, language);
+      } catch (error) {
+        console.error('Failed to get new question:', error);
       }
     }
   };
 
-  const handleShuffle = () => {
-    const allQuestions = CONVERSATION_DECKS.flatMap(deck => deck.cards);
-    const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)];
-    setSelectedQuestion(randomQuestion);
-    setIsModalOpen(true);
+  const handleShuffle = async () => {
+    try {
+      await getRandomCard(language);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Failed to get random card:', error);
+    }
   };
+
+  const handleVote = async (cardId: string, voteType: 'upvote' | 'downvote') => {
+    try {
+      const success = await voteOnCard(cardId, voteType);
+      if (!success) {
+        console.error('Failed to vote on card');
+      }
+    } catch (error) {
+      console.error('Error voting on card:', error);
+    }
+  };
+
+  // Show error if categories failed to load
+  if (categoryError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <Navigation 
+          onShuffleMode={handleShuffle}
+          locale={locale}
+        />
+        {children}
+        <div className="pt-24 pb-12 px-4">
+          <div className="container mx-auto max-w-6xl">
+            <ErrorMessage 
+              message={`Failed to load categories: ${categoryError}`}
+              onRetry={() => window.location.reload()}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -52,15 +107,23 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
       
       {children}
       
-      <PageContent locale={locale} onDeckClick={handleDeckClick} />
+      <PageContent 
+        locale={locale} 
+        onDeckClick={handleDeckClick}
+        categoryCounts={categoryCounts}
+        isLoadingCategories={isLoadingCategories}
+      />
 
       {/* Question Modal */}
       <QuestionModal
-        question={selectedQuestion}
+        question={currentCard}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onNewQuestion={handleNewQuestion}
+        onVote={handleVote}
         locale={locale}
+        isLoading={isLoadingCard}
+        error={cardError}
       />
     </>
   );

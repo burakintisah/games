@@ -74,8 +74,8 @@ games/
   - *Notes*: ✅ Complete - Comprehensive REST API implemented with 8 endpoints: GET/POST/PUT/DELETE for conversation cards, voting system (upvote/downvote), vote statistics, filtering & pagination. All endpoints tested and working. Full documentation with curl examples in backend/API_ENDPOINTS.md
 
 - [ ] **Frontend-Backend Connection**
-  - *Prompt*: Establish communication between frontend and backend
-  - *Notes*: Ready to implement - will create API client and connection utilities
+  - *Prompt*: Establish communication between frontend and backend. Use the endpoints that are already created. Do not add any new functionality on frontend. Just make sure use the proper endpoints. Like while showing the count use the /api/v1/conversation-cards/categories/ and get random question. Also make sure call endpoint for shuffle button. 
+  - *Notes*:
 
 ### 🎮 Game Development
 - [x] **Conversation Cards Data Structure**
