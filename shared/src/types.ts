@@ -1,29 +1,39 @@
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-export interface Game {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-}
+// Core game types
+export type DifficultyLevel = 'easy' | 'medium' | 'hard';
 
 export interface ConversationCard {
   id: string;
   question: string;
   category: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: DifficultyLevel;
   tags: string[];
 }
 
-export interface Deck {
+export interface ConversationDeck {
   id: string;
   name: string;
   description: string;
   color: string;
   icon: string;
-  questions: ConversationCard[];
+  cards: ConversationCard[];
+}
+
+// API response types
+export interface ApiResponse<T = any> {
+  status: 'success' | 'error';
+  message?: string;
+  timestamp: string;
+  data?: T;
+  error?: string;
+}
+
+export interface HealthCheckResponse {
+  status: 'healthy' | 'unhealthy';
+  timestamp: string;
+  uptime: number;
+  environment: string;
+  version: string;
+  services: {
+    firebase: 'connected' | 'disconnected';
+  };
 }

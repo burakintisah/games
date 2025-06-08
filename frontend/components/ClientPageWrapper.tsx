@@ -17,8 +17,8 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
 
   const handleDeckClick = (deckId: string) => {
     const deck = CONVERSATION_DECKS.find(d => d.id === deckId);
-    if (deck && deck.questions.length > 0) {
-      const randomQuestion = deck.questions[Math.floor(Math.random() * deck.questions.length)];
+    if (deck && deck.cards.length > 0) {
+      const randomQuestion = deck.cards[Math.floor(Math.random() * deck.cards.length)];
       setSelectedQuestion(randomQuestion);
       setIsModalOpen(true);
     }
@@ -27,17 +27,17 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
   const handleNewQuestion = () => {
     if (selectedQuestion) {
       const deck = CONVERSATION_DECKS.find(d => 
-        d.questions.some(q => q.category === selectedQuestion.category)
+        d.cards.some(q => q.category === selectedQuestion.category)
       );
       if (deck) {
-        const randomQuestion = deck.questions[Math.floor(Math.random() * deck.questions.length)];
+        const randomQuestion = deck.cards[Math.floor(Math.random() * deck.cards.length)];
         setSelectedQuestion(randomQuestion);
       }
     }
   };
 
   const handleShuffle = () => {
-    const allQuestions = CONVERSATION_DECKS.flatMap(deck => deck.questions);
+    const allQuestions = CONVERSATION_DECKS.flatMap(deck => deck.cards);
     const randomQuestion = allQuestions[Math.floor(Math.random() * allQuestions.length)];
     setSelectedQuestion(randomQuestion);
     setIsModalOpen(true);

@@ -11,31 +11,32 @@
   "decks": {
     "relationships": {
       "name": "İlişkiler",
-      "description": "Bağlantıları, sevgiyi ve insan bağlarını keşfedin"
+      "description": "Sevgi, arkadaşlık ve insan bağlantıları hakkında derin sorular"
     },
-    "family": {
-      "name": "Aile", 
-      "description": "Aile dinamiklerini ve nesiller arası bilgeliği keşfedin"
-    },
-    "life": {
-      "name": "Yaşam",
-      "description": "Amaç, anlam ve kişisel gelişim üzerine düşünün"
+    "selfKnowledge": {
+      "name": "Öz Bilgi",
+      "description": "Kendinizi daha iyi anlamanıza yardımcı olacak sorular"
     },
     "work": {
       "name": "İş ve Amaç",
-      "description": "Çağrı, yaratıcılık ve mesleki tatmini keşfedin"
+      "description": "Kariyer, hırs ve yaşam amacını keşfetmek"
     },
-    "creativity": {
-      "name": "Yaratıcılık",
-      "description": "Hayal gücü, ifade ve sanatsal ruhu açığa çıkarın"
+    "culture": {
+      "name": "Kültür ve Toplum",
+      "description": "Sanat, toplum ve insan kültürü hakkında sorular"
     },
-    "growth": {
-      "name": "Kişisel Gelişim",
-      "description": "Kendini keşfetme ve dönüşüm yolculuğu"
+    "philosophy": {
+      "name": "Felsefe",
+      "description": "Varoluş ve anlam hakkında derin felsefi sorular"
+    },
+    "childhood": {
+      "name": "Çocukluk ve Anılar",
+      "description": "Geçmiş deneyimler ve şekillendirici anlar üzerine düşünmek"
     }
   },
   "ui": {
     "cards": "kart",
+    "start": "Başla",
     "tapToExplore": "Keşfetmek için dokunun",
     "newQuestion": "Yeni Soru",
     "imReady": "Hazırım",

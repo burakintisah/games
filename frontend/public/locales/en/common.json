@@ -11,31 +11,32 @@
   "decks": {
     "relationships": {
       "name": "Relationships",
-      "description": "Explore connections, love, and human bonds"
+      "description": "Deep questions about love, friendship, and human connections"
     },
-    "family": {
-      "name": "Family", 
-      "description": "Navigate family dynamics and generational wisdom"
-    },
-    "life": {
-      "name": "Life",
-      "description": "Reflect on purpose, meaning, and personal growth"
+    "selfKnowledge": {
+      "name": "Self-Knowledge",
+      "description": "Questions to help you understand yourself better"
     },
     "work": {
       "name": "Work & Purpose",
-      "description": "Discover calling, creativity, and professional fulfillment"
+      "description": "Exploring career, ambition, and life purpose"
     },
-    "creativity": {
-      "name": "Creativity",
-      "description": "Unlock imagination, expression, and artistic spirit"
+    "culture": {
+      "name": "Culture & Society",
+      "description": "Questions about art, society, and human culture"
     },
-    "growth": {
-      "name": "Personal Growth",
-      "description": "Journey of self-discovery and transformation"
+    "philosophy": {
+      "name": "Philosophy",
+      "description": "Deep philosophical questions about existence and meaning"
+    },
+    "childhood": {
+      "name": "Childhood & Memory",
+      "description": "Reflecting on past experiences and formative moments"
     }
   },
   "ui": {
     "cards": "cards",
+    "start": "Start",
     "tapToExplore": "Tap to explore",
     "newQuestion": "New Question",
     "imReady": "I'm Ready",

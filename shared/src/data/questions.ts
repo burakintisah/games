@@ -1,13 +1,13 @@
-import { Deck } from '../types';
+import { ConversationDeck } from '../types';
 
-export const CONVERSATION_DECKS: Deck[] = [
+export const CONVERSATION_DECKS: ConversationDeck[] = [
   {
     id: 'relationships',
     name: 'Relationships',
-    description: 'Explore connections, love, and human bonds',
-    color: 'from-rose-400 to-pink-600',
+    description: 'Deep questions about love, friendship, and human connections',
+    color: 'bg-gradient-to-br from-rose-400 to-pink-600',
     icon: '💕',
-    questions: [
+    cards: [
       {
         id: 'rel_1',
         question: 'What do you believe makes a relationship truly fulfilling, beyond the obvious compatibility?',
@@ -32,72 +32,42 @@ export const CONVERSATION_DECKS: Deck[] = [
     ]
   },
   {
-    id: 'family',
-    name: 'Family',
-    description: 'Navigate family dynamics and generational wisdom',
-    color: 'from-emerald-400 to-teal-600',
-    icon: '🏠',
-    questions: [
+    id: 'self-knowledge',
+    name: 'Self-Knowledge',
+    description: 'Questions to help you understand yourself better',
+    color: 'bg-gradient-to-br from-blue-400 to-indigo-600',
+    icon: '🧠',
+    cards: [
       {
-        id: 'fam_1',
-        question: 'What family tradition or value do you want to pass on, and what would you change?',
-        category: 'family',
+        id: 'self_1',
+        question: 'What pattern in your life are you most ready to break, and what would replace it?',
+        category: 'self-knowledge',
+        difficulty: 'hard',
+        tags: ['patterns', 'change', 'transformation']
+      },
+      {
+        id: 'self_2',
+        question: 'What compliment do you have trouble accepting, and what might that reveal about you?',
+        category: 'self-knowledge',
         difficulty: 'medium',
-        tags: ['tradition', 'values', 'legacy']
+        tags: ['self-worth', 'acceptance', 'insight']
       },
       {
-        id: 'fam_2',
-        question: 'How has your understanding of your parents changed as you\'ve grown older?',
-        category: 'family',
+        id: 'self_3',
+        question: 'If you could give yourself one piece of advice right now, what would it be?',
+        category: 'self-knowledge',
         difficulty: 'medium',
-        tags: ['parents', 'perspective', 'maturity']
-      },
-      {
-        id: 'fam_3',
-        question: 'What aspect of your family dynamic do you find most challenging to navigate?',
-        category: 'family',
-        difficulty: 'hard',
-        tags: ['dynamics', 'challenges', 'growth']
-      }
-    ]
-  },
-  {
-    id: 'life',
-    name: 'Life',
-    description: 'Reflect on purpose, meaning, and personal growth',
-    color: 'from-violet-400 to-purple-600',
-    icon: '🌟',
-    questions: [
-      {
-        id: 'life_1',
-        question: 'If you could live your life again, what would you spend more time doing and less time worrying about?',
-        category: 'life',
-        difficulty: 'hard',
-        tags: ['regret', 'priorities', 'wisdom']
-      },
-      {
-        id: 'life_2',
-        question: 'What does a meaningful life look like to you, and how close are you to living it?',
-        category: 'life',
-        difficulty: 'hard',
-        tags: ['meaning', 'purpose', 'fulfillment']
-      },
-      {
-        id: 'life_3',
-        question: 'What belief about life have you held for a long time that you\'re now questioning?',
-        category: 'life',
-        difficulty: 'hard',
-        tags: ['beliefs', 'questioning', 'growth']
+        tags: ['wisdom', 'advice', 'reflection']
       }
     ]
   },
   {
     id: 'work',
     name: 'Work & Purpose',
-    description: 'Discover calling, creativity, and professional fulfillment',
-    color: 'from-amber-400 to-orange-600',
-    icon: '🎯',
-    questions: [
+    description: 'Exploring career, ambition, and life purpose',
+    color: 'bg-gradient-to-br from-green-400 to-emerald-600',
+    icon: '💼',
+    cards: [
       {
         id: 'work_1',
         question: 'What would you do if you knew you couldn\'t fail, and money wasn\'t a concern?',
@@ -122,62 +92,92 @@ export const CONVERSATION_DECKS: Deck[] = [
     ]
   },
   {
-    id: 'creativity',
-    name: 'Creativity',
-    description: 'Unlock imagination, expression, and artistic spirit',
-    color: 'from-indigo-400 to-blue-600',
-    icon: '🎨',
-    questions: [
+    id: 'culture',
+    name: 'Culture & Society',
+    description: 'Questions about art, society, and human culture',
+    color: 'bg-gradient-to-br from-purple-400 to-violet-600',
+    icon: '🎭',
+    cards: [
       {
-        id: 'cre_1',
+        id: 'culture_1',
         question: 'What creative pursuit have you always wanted to try but haven\'t yet? What\'s holding you back?',
-        category: 'creativity',
+        category: 'culture',
         difficulty: 'medium',
         tags: ['creativity', 'barriers', 'exploration']
       },
       {
-        id: 'cre_2',
+        id: 'culture_2',
         question: 'When do you feel most creative and alive? What conditions bring out your best ideas?',
-        category: 'creativity',
+        category: 'culture',
         difficulty: 'easy',
         tags: ['flow', 'inspiration', 'conditions']
       },
       {
-        id: 'cre_3',
+        id: 'culture_3',
         question: 'How do you deal with creative blocks, and what have you learned about your creative process?',
-        category: 'creativity',
+        category: 'culture',
         difficulty: 'medium',
         tags: ['blocks', 'process', 'learning']
       }
     ]
   },
   {
-    id: 'growth',
-    name: 'Personal Growth',
-    description: 'Journey of self-discovery and transformation',
-    color: 'from-green-400 to-emerald-600',
-    icon: '🌱',
-    questions: [
+    id: 'philosophy',
+    name: 'Philosophy',
+    description: 'Deep philosophical questions about existence and meaning',
+    color: 'bg-gradient-to-br from-amber-400 to-orange-600',
+    icon: '🤔',
+    cards: [
       {
-        id: 'grow_1',
-        question: 'What pattern in your life are you most ready to break, and what would replace it?',
-        category: 'growth',
+        id: 'phil_1',
+        question: 'If you could live your life again, what would you spend more time doing and less time worrying about?',
+        category: 'philosophy',
         difficulty: 'hard',
-        tags: ['patterns', 'change', 'transformation']
+        tags: ['regret', 'priorities', 'wisdom']
       },
       {
-        id: 'grow_2',
-        question: 'What compliment do you have trouble accepting, and what might that reveal about you?',
-        category: 'growth',
-        difficulty: 'medium',
-        tags: ['self-worth', 'acceptance', 'insight']
+        id: 'phil_2',
+        question: 'What does a meaningful life look like to you, and how close are you to living it?',
+        category: 'philosophy',
+        difficulty: 'hard',
+        tags: ['meaning', 'purpose', 'fulfillment']
       },
       {
-        id: 'grow_3',
-        question: 'If you could give yourself one piece of advice right now, what would it be?',
-        category: 'growth',
+        id: 'phil_3',
+        question: 'What belief about life have you held for a long time that you\'re now questioning?',
+        category: 'philosophy',
+        difficulty: 'hard',
+        tags: ['beliefs', 'questioning', 'growth']
+      }
+    ]
+  },
+  {
+    id: 'childhood',
+    name: 'Childhood & Memory',
+    description: 'Reflecting on past experiences and formative moments',
+    color: 'bg-gradient-to-br from-teal-400 to-cyan-600',
+    icon: '🧸',
+    cards: [
+      {
+        id: 'child_1',
+        question: 'What family tradition or value do you want to pass on, and what would you change?',
+        category: 'childhood',
         difficulty: 'medium',
-        tags: ['wisdom', 'advice', 'reflection']
+        tags: ['tradition', 'values', 'legacy']
+      },
+      {
+        id: 'child_2',
+        question: 'How has your understanding of your parents changed as you\'ve grown older?',
+        category: 'childhood',
+        difficulty: 'medium',
+        tags: ['parents', 'perspective', 'maturity']
+      },
+      {
+        id: 'child_3',
+        question: 'What aspect of your family dynamic do you find most challenging to navigate?',
+        category: 'childhood',
+        difficulty: 'hard',
+        tags: ['dynamics', 'challenges', 'growth']
       }
     ]
   }

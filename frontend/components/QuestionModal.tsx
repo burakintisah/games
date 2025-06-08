@@ -17,11 +17,11 @@ interface QuestionModalProps {
 const getDeckTranslationKey = (category: string) => {
   const keyMap: Record<string, string> = {
     'relationships': 'relationships',
-    'family': 'family',
-    'life': 'life',
-    'work-purpose': 'work',
-    'creativity': 'creativity',
-    'personal-growth': 'growth',
+    'self-knowledge': 'selfKnowledge',
+    'work': 'work',
+    'culture': 'culture',
+    'philosophy': 'philosophy',
+    'childhood': 'childhood',
   };
   
   return keyMap[category] || category;
@@ -56,11 +56,14 @@ export function QuestionModal({ question, isOpen, onClose, onNewQuestion, locale
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-r from-violet-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-lg">{question.category === 'relationships' ? '💕' : 
-                    question.category === 'family' ? '👨‍👩‍👧‍👦' :
-                    question.category === 'life' ? '🌟' :
-                    question.category === 'work-purpose' ? '🎯' :
-                    question.category === 'creativity' ? '🎨' : '🌱'}</span>
+                  <span className="text-white text-lg">
+                    {question.category === 'relationships' ? '💕' : 
+                     question.category === 'self-knowledge' ? '🧠' :
+                     question.category === 'work' ? '💼' :
+                     question.category === 'culture' ? '🎭' :
+                     question.category === 'philosophy' ? '🤔' :
+                     question.category === 'childhood' ? '🧸' : '❓'}
+                  </span>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 capitalize">
