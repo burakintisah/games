@@ -1,9 +1,15 @@
 // Core game types
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
+export type SupportedLanguage = 'en' | 'tr';
+
+export interface MultilingualText {
+  en: string;
+  tr: string;
+}
 
 export interface ConversationCard {
   id: string;
-  question: string;
+  question: MultilingualText;
   category: string;
   difficulty: DifficultyLevel;
   tags: string[];

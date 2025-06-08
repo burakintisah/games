@@ -33,6 +33,17 @@ export function QuestionModal({ question, isOpen, onClose, onNewQuestion, locale
   if (!question) return null;
 
   const translationKey = getDeckTranslationKey(question.category);
+  
+  // Get the appropriate language version of the question
+  const getQuestionText = () => {
+    if (typeof question.question === 'string') {
+      // Backward compatibility for old format
+      return question.question;
+    }
+    // New multilingual format
+    const lang = locale === 'tr' ? 'tr' : 'en';
+    return question.question[lang] || question.question.en || 'Question not available';
+  };
 
   return (
     <AnimatePresence>
@@ -95,7 +106,7 @@ export function QuestionModal({ question, isOpen, onClose, onNewQuestion, locale
             <div className="p-6">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 leading-relaxed mb-4">
-                  {question.question}
+                  {getQuestionText()}
                 </h2>
                 <p className="text-gray-600 text-sm">
                   {t('ui.takeYourTime')}
