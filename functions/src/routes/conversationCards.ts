@@ -21,8 +21,9 @@ const formatCardForLanguage = (cardData: any, language: 'en' | 'tr' = 'en') => {
 router.get('/', async (req: express.Request, res: express.Response): Promise<void> => {
   try {
     const db = getFirestore();
-    const { category, difficulty, limit = '50', offset = '0', language = 'en' } = req.query;
+    const { category, difficulty, limit = '50', offset = '0', language = 'en', raw } = req.query;
     const lang = (language as string) === 'tr' ? 'tr' : 'en';
+    const returnRaw = raw === 'true'; // Admin mode - return raw multilingual data
     
     let query: any = db.collection('conversation-cards');
     
@@ -46,7 +47,8 @@ router.get('/', async (req: express.Request, res: express.Response): Promise<voi
     const snapshot = await query.get();
     const conversationCards = snapshot.docs.map((doc: any) => {
       const cardData = { id: doc.id, ...doc.data() };
-      return formatCardForLanguage(cardData, lang);
+      // Return raw data for admin, formatted data for regular users
+      return returnRaw ? cardData : formatCardForLanguage(cardData, lang);
     });
 
     res.status(200).json({
@@ -56,7 +58,7 @@ router.get('/', async (req: express.Request, res: express.Response): Promise<voi
       data: {
         cards: conversationCards,
         total: conversationCards.length,
-        filters: { category, difficulty, language: lang },
+        filters: { category, difficulty, language: returnRaw ? 'raw' : lang },
         pagination: { limit: limitNum, offset: offsetNum }
       }
     });
@@ -193,6 +195,60 @@ router.get('/random', async (req: express.Request, res: express.Response): Promi
     res.status(500).json({
       status: 'error',
       message: 'Failed to retrieve random conversation cards',
+      timestamp: new Date().toISOString(),
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+// GET /api/v1/conversation-cards/admin - Get all conversation cards with raw multilingual data (for admin panel)
+router.get('/admin', async (req: express.Request, res: express.Response): Promise<void> => {
+  try {
+    const db = getFirestore();
+    const { category, difficulty, limit = '1000', offset = '0' } = req.query;
+    
+    let query: any = db.collection('conversation-cards');
+    
+    // Apply filters
+    if (category) {
+      query = query.where('category', '==', category);
+    }
+    if (difficulty) {
+      query = query.where('difficulty', '==', difficulty);
+    }
+    
+    // Apply pagination
+    const limitNum = parseInt(limit as string);
+    const offsetNum = parseInt(offset as string);
+    
+    query = query.limit(limitNum);
+    if (offsetNum > 0) {
+      query = query.offset(offsetNum);
+    }
+    
+    const snapshot = await query.get();
+    const conversationCards = snapshot.docs.map((doc: any) => {
+      const cardData = { id: doc.id, ...doc.data() };
+      // Return raw data without language formatting for admin
+      return cardData;
+    });
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Admin conversation cards retrieved successfully',
+      timestamp: new Date().toISOString(),
+      data: {
+        cards: conversationCards,
+        total: conversationCards.length,
+        filters: { category, difficulty, language: 'raw' },
+        pagination: { limit: limitNum, offset: offsetNum }
+      }
+    });
+  } catch (error) {
+    console.error('❌ Error fetching admin conversation cards:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to retrieve admin conversation cards',
       timestamp: new Date().toISOString(),
       error: error instanceof Error ? error.message : 'Unknown error'
     });

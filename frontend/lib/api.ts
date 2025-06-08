@@ -105,6 +105,7 @@ export class ConversationCardsAPI {
     language?: SupportedLanguage;
     limit?: number;
     offset?: number;
+    raw?: boolean; // Admin mode - return raw multilingual data
   } = {}): Promise<ApiResponse<CardsListData>> {
     const searchParams = new URLSearchParams();
     
@@ -113,6 +114,7 @@ export class ConversationCardsAPI {
     if (params.language) searchParams.append('language', params.language);
     if (params.limit) searchParams.append('limit', params.limit.toString());
     if (params.offset) searchParams.append('offset', params.offset.toString());
+    if (params.raw) searchParams.append('raw', 'true');
 
     const query = searchParams.toString();
     const endpoint = `/v1/conversation-cards${query ? `?${query}` : ''}`;
@@ -200,6 +202,26 @@ export class ConversationCardsAPI {
   // Get vote statistics
   async getVoteStats(cardId: string): Promise<ApiResponse<VoteStatsData>> {
     return this.request<VoteStatsData>(`/v1/conversation-cards/${cardId}/votes`);
+  }
+
+  // Get all conversation cards for admin (raw multilingual data)
+  async getAdminCards(params: {
+    category?: string;
+    difficulty?: 'easy' | 'medium' | 'hard';
+    limit?: number;
+    offset?: number;
+  } = {}): Promise<ApiResponse<CardsListData>> {
+    const searchParams = new URLSearchParams();
+    
+    if (params.category) searchParams.append('category', params.category);
+    if (params.difficulty) searchParams.append('difficulty', params.difficulty);
+    if (params.limit) searchParams.append('limit', params.limit.toString());
+    if (params.offset) searchParams.append('offset', params.offset.toString());
+
+    const query = searchParams.toString();
+    const endpoint = `/v1/conversation-cards/admin${query ? `?${query}` : ''}`;
+    
+    return this.request<CardsListData>(endpoint);
   }
 }
 
