@@ -14,6 +14,7 @@ interface ClientPageWrapperProps {
   PageContent: React.ComponentType<{ 
     locale: string; 
     onDeckClick: (deckId: string) => void;
+    onShuffleClick: () => void;
     categoryCounts: Record<string, number>;
     isLoadingCategories: boolean;
   }>;
@@ -119,6 +120,7 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
       <PageContent 
         locale={locale} 
         onDeckClick={handleDeckClick}
+        onShuffleClick={handleShuffle}
         categoryCounts={categoryCounts}
         isLoadingCategories={isLoadingCategories}
       />

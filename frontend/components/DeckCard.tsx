@@ -10,6 +10,9 @@ interface DeckCardProps {
   index: number;
   locale: string;
   cardCount?: number; // Optional prop for API-provided card count
+  compact?: boolean; // Optional prop for compact mobile layout
+  mobile?: boolean; // Optional prop for ultra-compact mobile grid layout
+  fullSize?: boolean; // Optional prop for full-size mobile layout
 }
 
 const getDeckTranslationKey = (deckId: string) => {
@@ -25,16 +28,73 @@ const getDeckTranslationKey = (deckId: string) => {
   return keyMap[deckId] || deckId;
 };
 
-export function DeckCard({ deck, onClick, index, locale, cardCount }: DeckCardProps) {
+export function DeckCard({ deck, onClick, index, locale, cardCount, compact = false, mobile = false, fullSize = false }: DeckCardProps) {
   const { t } = useClientTranslation(locale);
   const translationKey = getDeckTranslationKey(deck.id);
   
   // Use API-provided count if available, otherwise fall back to static count
   const displayCardCount = cardCount !== undefined ? cardCount : deck.cards.length;
 
+  // Mobile ultra-compact layout
+  if (mobile) {
+    // Full-size mobile layout for 2x4 grid
+    if (fullSize) {
+      return (
+        <motion.div
+          className={`${deck.color} rounded-3xl p-4 text-white cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden w-full h-full flex flex-col items-center justify-center`}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={onClick}
+          style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)' }}
+        >
+          {/* Background overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/15"></div>
+          
+          {/* Content */}
+          <div className="relative z-10 text-center">
+            <div className="text-3xl mb-3 drop-shadow-lg">{deck.icon}</div>
+            <span className="text-sm font-bold leading-tight drop-shadow-lg">
+              {t(`decks.${translationKey}.name`) || deck.name}
+            </span>
+          </div>
+          
+          {/* Decorative elements */}
+          <div className="absolute -top-4 -right-4 w-12 h-12 bg-white/10 rounded-full"></div>
+          <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-white/10 rounded-full"></div>
+        </motion.div>
+      );
+    }
+    
+    // Original compact mobile layout
+    return (
+      <motion.div
+        className={`${deck.color} rounded-3xl p-4 text-white cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden w-28 h-32 flex flex-col items-center justify-center`}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onClick}
+        style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)' }}
+      >
+        {/* Background overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/15"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 text-center">
+          <div className="text-2xl mb-2 drop-shadow-lg">{deck.icon}</div>
+          <span className="text-xs font-bold leading-tight drop-shadow-lg">
+            {t(`decks.${translationKey}.name`) || deck.name}
+          </span>
+        </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute -top-3 -right-3 w-8 h-8 bg-white/10 rounded-full"></div>
+        <div className="absolute -bottom-4 -left-4 w-10 h-10 bg-white/10 rounded-full"></div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
-      className={`${deck.color} rounded-xl p-6 text-white cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden`}
+      className={`${deck.color} rounded-xl ${compact ? 'p-4' : 'p-6'} text-white cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden`}
       whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
@@ -48,19 +108,19 @@ export function DeckCard({ deck, onClick, index, locale, cardCount }: DeckCardPr
       
       {/* Content */}
       <div className="relative z-10">
-        <div className="text-4xl mb-4 drop-shadow-sm">{deck.icon}</div>
-        <h3 className="text-xl font-bold mb-2 text-white drop-shadow-sm">
+        <div className={`${compact ? 'text-2xl mb-2' : 'text-4xl mb-4'} drop-shadow-sm`}>{deck.icon}</div>
+        <h3 className={`${compact ? 'text-lg' : 'text-xl'} font-bold mb-2 text-white drop-shadow-sm`}>
           {t(`decks.${translationKey}.name`) || deck.name}
         </h3>
-        <p className="text-white/95 text-sm mb-4 leading-relaxed drop-shadow-sm">
+        <p className={`text-white/95 ${compact ? 'text-xs mb-3' : 'text-sm mb-4'} leading-relaxed drop-shadow-sm`}>
           {t(`decks.${translationKey}.description`) || deck.description}
         </p>
         <div className="flex justify-between items-center">
-          <span className="text-white/90 text-sm font-medium drop-shadow-sm">
+          <span className={`text-white/90 ${compact ? 'text-xs' : 'text-sm'} font-medium drop-shadow-sm`}>
             {displayCardCount} {t('ui.cards')}
           </span>
           <motion.button
-            className="bg-white/25 hover:bg-white/35 px-4 py-2 rounded-lg text-sm font-semibold transition-colors backdrop-blur-sm border border-white/20 text-white drop-shadow-sm"
+            className={`bg-white/25 hover:bg-white/35 ${compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'} rounded-lg font-semibold transition-colors backdrop-blur-sm border border-white/20 text-white drop-shadow-sm`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -70,8 +130,8 @@ export function DeckCard({ deck, onClick, index, locale, cardCount }: DeckCardPr
       </div>
       
       {/* Decorative elements */}
-      <div className="absolute -top-4 -right-4 w-16 h-16 bg-white/5 rounded-full"></div>
-      <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
+      <div className={`absolute -top-4 -right-4 ${compact ? 'w-12 h-12' : 'w-16 h-16'} bg-white/5 rounded-full`}></div>
+      <div className={`absolute -bottom-6 -left-6 ${compact ? 'w-16 h-16' : 'w-20 h-20'} bg-white/5 rounded-full`}></div>
     </motion.div>
   );
 }
