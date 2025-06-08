@@ -12,6 +12,32 @@ import { motion } from 'framer-motion';
 import { Shuffle } from 'lucide-react';
 import { useClientTranslation } from '../../hooks/useClientTranslation';
 
+// Animation variants for stagger effect
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20, scale: 0.8 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+    }
+  }
+};
+
 interface PageContentProps {
   locale: string;
   onDeckClick: (deckId: string) => void;
@@ -205,59 +231,78 @@ function PageContent({ locale, onDeckClick, onShuffleClick, categoryCounts, isLo
                   className="w-full h-full"
                 >
                   <motion.div
-                    className="w-full h-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-3xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    className="w-full h-full bg-gradient-shuffle text-white rounded-3xl font-semibold shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden flex flex-col items-center justify-center cursor-pointer"
+                    whileHover={{ scale: 1.05, rotate: -1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={onShuffleClick}
                     style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)' }}
                   >
                     {/* Background overlay for consistency */}
-                    <div className="absolute inset-0 bg-black/15"></div>
+                    <div className="absolute inset-0 bg-black/15 rounded-3xl"></div>
                     
                     {/* Content */}
                     <div className="relative z-10 text-center">
-                      <div className="text-3xl mb-3 drop-shadow-lg">
+                      <div className="text-3xl md:text-4xl mb-3 drop-shadow-lg">
                         <Shuffle className="w-8 h-8 mx-auto" />
                       </div>
-                      <span className="text-sm font-bold leading-tight drop-shadow-lg">
+                      <span className="font-semibold tracking-tight text-base leading-tight drop-shadow-lg">
                         {t('navigation.shuffle')}
                       </span>
                     </div>
                     
                     {/* Decorative elements matching deck cards */}
-                    <div className="absolute -top-4 -right-4 w-12 h-12 bg-white/10 rounded-full"></div>
-                    <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-white/10 rounded-full"></div>
+                    <div className="absolute top-2 right-2 w-12 h-12 bg-white/10 rounded-full"></div>
+                    <div className="absolute bottom-2 left-2 w-16 h-16 bg-white/10 rounded-full"></div>
                   </motion.div>
                 </motion.div>
               </div>
             </div>
           </div>
 
-          {/* Desktop: Original grid layout */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Desktop: Staggered grid layout with entrance animations */}
+          <motion.div 
+            className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={container}
+            initial="hidden"
+            animate="show"
+          >
             {decksWithCounts.map((deck, index) => (
-              <DeckCard
-                key={deck.id}
-                deck={deck}
-                index={index}
-                onClick={() => onDeckClick(deck.id)}
-                locale={locale}
-                cardCount={deck.cardCount}
-              />
+              <motion.div key={deck.id} variants={item}>
+                <DeckCard
+                  deck={deck}
+                  index={index}
+                  onClick={() => onDeckClick(deck.id)}
+                  locale={locale}
+                  cardCount={deck.cardCount}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </main>
     </>
   );
 }
 
-interface PageHeaderProps {
-  title: string;
-  description: string;
+export default function Page({ params: { locale } }: { params: { locale: string } }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <ClientPageWrapper locale={locale} PageContent={PageContent}>
+        <div className="hidden md:block">
+          <PageHeader locale={locale} />
+        </div>
+      </ClientPageWrapper>
+    </div>
+  );
 }
 
-function PageHeader({ title, description }: PageHeaderProps) {
+interface PageHeaderProps {
+  locale: string;
+}
+
+function PageHeader({ locale }: PageHeaderProps) {
+  const { t } = useClientTranslation(locale);
+  
   return (
     <div className="pt-32 md:pt-40 pb-8 md:pb-12 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -268,7 +313,7 @@ function PageHeader({ title, description }: PageHeaderProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {title}
+            {t('gameModes.conversationCards')}
           </motion.h1>
           <motion.p 
             className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto"
@@ -276,27 +321,10 @@ function PageHeader({ title, description }: PageHeaderProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {description}
+            {t('gameModes.conversationCardsDesc')}
           </motion.p>
         </div>
       </div>
-    </div>
-  );
-}
-
-export default async function Page({ params: { locale } }: { params: { locale: string } }) {
-  const { t } = await getTranslation(locale);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <ClientPageWrapper locale={locale} PageContent={PageContent}>
-        <div className="hidden md:block">
-          <PageHeader 
-            title={t('gameModes.conversationCards')}
-            description={t('gameModes.conversationCardsDesc')}
-          />
-        </div>
-      </ClientPageWrapper>
     </div>
   );
 } 

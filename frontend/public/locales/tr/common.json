@@ -39,12 +39,19 @@
     "start": "Başla",
     "tapToExplore": "Keşfetmek için dokunun",
     "newQuestion": "Yeni Soru",
+    "nextQuestion": "Sonraki Soru",
+    "close": "Kapat",
     "imReady": "Hazırım",
     "takeYourTime": "Düşünmek ve tartışmak için zaman ayırın",
+    "loadingQuestion": "Soru yükleniyor...",
+    "thankYouForVoting": "Geri bildiriminiz için teşekkürler!",
     "difficulty": {
       "easy": "Kolay",
       "medium": "Orta",
       "hard": "Zor"
     }
+  },
+  "errors": {
+    "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin."
   }
 } 

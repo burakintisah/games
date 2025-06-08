@@ -5,7 +5,7 @@ export const CONVERSATION_DECKS: ConversationDeck[] = [
     id: 'relationships',
     name: 'Relationships',
     description: 'Deep questions about love, friendship, and human connections',
-    color: 'bg-gradient-to-br from-rose-400 to-pink-600',
+    color: 'bg-gradient-relationships',
     icon: '💕',
     cards: [
       {
@@ -44,7 +44,7 @@ export const CONVERSATION_DECKS: ConversationDeck[] = [
     id: 'self-knowledge',
     name: 'Self-Knowledge',
     description: 'Questions to help you understand yourself better',
-    color: 'bg-gradient-to-br from-blue-400 to-indigo-600',
+    color: 'bg-gradient-self-knowledge',
     icon: '🧠',
     cards: [
       {
@@ -83,7 +83,7 @@ export const CONVERSATION_DECKS: ConversationDeck[] = [
     id: 'work',
     name: 'Work & Purpose',
     description: 'Exploring career, ambition, and life purpose',
-    color: 'bg-gradient-to-br from-green-400 to-emerald-600',
+    color: 'bg-gradient-work',
     icon: '💼',
     cards: [
       {
@@ -122,7 +122,7 @@ export const CONVERSATION_DECKS: ConversationDeck[] = [
     id: 'culture',
     name: 'Culture & Society',
     description: 'Questions about art, society, and human culture',
-    color: 'bg-gradient-to-br from-purple-400 to-violet-600',
+    color: 'bg-gradient-culture',
     icon: '🎭',
     cards: [
       {
@@ -161,7 +161,7 @@ export const CONVERSATION_DECKS: ConversationDeck[] = [
     id: 'philosophy',
     name: 'Philosophy',
     description: 'Deep philosophical questions about existence and meaning',
-    color: 'bg-gradient-to-br from-amber-400 to-orange-600',
+    color: 'bg-gradient-philosophy',
     icon: '🤔',
     cards: [
       {
@@ -200,7 +200,7 @@ export const CONVERSATION_DECKS: ConversationDeck[] = [
     id: 'childhood',
     name: 'Childhood & Memory',
     description: 'Reflecting on past experiences and formative moments',
-    color: 'bg-gradient-to-br from-teal-400 to-cyan-600',
+    color: 'bg-gradient-childhood',
     icon: '🧸',
     cards: [
       {

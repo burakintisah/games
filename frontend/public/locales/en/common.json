@@ -39,12 +39,19 @@
     "start": "Start",
     "tapToExplore": "Tap to explore",
     "newQuestion": "New Question",
+    "nextQuestion": "Next Question",
+    "close": "Close",
     "imReady": "I'm Ready",
     "takeYourTime": "Take your time to reflect and discuss",
+    "loadingQuestion": "Loading question...",
+    "thankYouForVoting": "Thank you for your feedback!",
     "difficulty": {
       "easy": "Easy",
       "medium": "Medium",
       "hard": "Hard"
     }
+  },
+  "errors": {
+    "voteError": "Failed to submit vote. Please try again."
   }
 } 

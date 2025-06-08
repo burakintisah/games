@@ -41,26 +41,26 @@ export function DeckCard({ deck, onClick, index, locale, cardCount, compact = fa
     if (fullSize) {
       return (
         <motion.div
-          className={`${deck.color} rounded-3xl p-4 text-white cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden w-full h-full flex flex-col items-center justify-center`}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          className={`${deck.color} rounded-3xl p-6 text-white cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden w-full h-full flex flex-col items-center justify-center`}
+          whileHover={{ scale: 1.05, rotate: -1, y: -2 }}
+          whileTap={{ scale: 0.95 }}
           onClick={onClick}
           style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)' }}
         >
           {/* Background overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/15"></div>
+          <div className="absolute inset-0 bg-black/15 rounded-3xl"></div>
           
           {/* Content */}
           <div className="relative z-10 text-center">
-            <div className="text-3xl mb-3 drop-shadow-lg">{deck.icon}</div>
-            <span className="text-sm font-bold leading-tight drop-shadow-lg">
+            <div className="text-3xl md:text-4xl mb-3 drop-shadow-lg">{deck.icon}</div>
+            <span className="font-semibold tracking-tight text-base leading-tight drop-shadow-lg">
               {t(`decks.${translationKey}.name`) || deck.name}
             </span>
           </div>
           
-          {/* Decorative elements */}
-          <div className="absolute -top-4 -right-4 w-12 h-12 bg-white/10 rounded-full"></div>
-          <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-white/10 rounded-full"></div>
+          {/* Decorative elements - positioned within rounded corners */}
+          <div className="absolute top-2 right-2 w-12 h-12 bg-white/10 rounded-full"></div>
+          <div className="absolute bottom-2 left-2 w-16 h-16 bg-white/10 rounded-full"></div>
         </motion.div>
       );
     }
@@ -68,35 +68,35 @@ export function DeckCard({ deck, onClick, index, locale, cardCount, compact = fa
     // Original compact mobile layout
     return (
       <motion.div
-        className={`${deck.color} rounded-3xl p-4 text-white cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden w-28 h-32 flex flex-col items-center justify-center`}
-        whileHover={{ scale: 1.05 }}
+        className={`${deck.color} rounded-3xl p-6 text-white cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden w-28 h-32 flex flex-col items-center justify-center`}
+        whileHover={{ scale: 1.05, rotate: -1, y: -2 }}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
         style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)' }}
       >
         {/* Background overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/15"></div>
+        <div className="absolute inset-0 bg-black/15 rounded-3xl"></div>
         
         {/* Content */}
         <div className="relative z-10 text-center">
-          <div className="text-2xl mb-2 drop-shadow-lg">{deck.icon}</div>
-          <span className="text-xs font-bold leading-tight drop-shadow-lg">
+          <div className="text-3xl md:text-4xl mb-2 drop-shadow-lg">{deck.icon}</div>
+          <span className="font-semibold tracking-tight text-xs leading-tight drop-shadow-lg">
             {t(`decks.${translationKey}.name`) || deck.name}
           </span>
         </div>
         
-        {/* Decorative elements */}
-        <div className="absolute -top-3 -right-3 w-8 h-8 bg-white/10 rounded-full"></div>
-        <div className="absolute -bottom-4 -left-4 w-10 h-10 bg-white/10 rounded-full"></div>
+        {/* Decorative elements - positioned within rounded corners */}
+        <div className="absolute top-1 right-1 w-8 h-8 bg-white/10 rounded-full"></div>
+        <div className="absolute bottom-1 left-1 w-10 h-10 bg-white/10 rounded-full"></div>
       </motion.div>
     );
   }
 
   return (
     <motion.div
-      className={`${deck.color} rounded-xl ${compact ? 'p-4' : 'p-6'} text-white cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden`}
-      whileHover={{ scale: 1.02, y: -2 }}
-      whileTap={{ scale: 0.98 }}
+      className={`${deck.color} rounded-3xl ${compact ? 'p-6' : 'p-6'} text-white cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden`}
+      whileHover={{ scale: 1.05, rotate: -1, y: -2 }}
+      whileTap={{ scale: 0.95 }}
       onClick={onClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -104,23 +104,23 @@ export function DeckCard({ deck, onClick, index, locale, cardCount, compact = fa
       style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)' }}
     >
       {/* Background overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/10"></div>
+      <div className="absolute inset-0 bg-black/10 rounded-3xl"></div>
       
       {/* Content */}
       <div className="relative z-10">
-        <div className={`${compact ? 'text-2xl mb-2' : 'text-4xl mb-4'} drop-shadow-sm`}>{deck.icon}</div>
-        <h3 className={`${compact ? 'text-lg' : 'text-xl'} font-bold mb-2 text-white drop-shadow-sm`}>
+        <div className="text-3xl md:text-4xl mb-4 drop-shadow-sm">{deck.icon}</div>
+        <h3 className="text-xl font-semibold tracking-tight mb-2 text-white drop-shadow-sm">
           {t(`decks.${translationKey}.name`) || deck.name}
         </h3>
-        <p className={`text-white/95 ${compact ? 'text-xs mb-3' : 'text-sm mb-4'} leading-relaxed drop-shadow-sm`}>
+        <p className="text-white/95 text-sm mb-4 leading-relaxed drop-shadow-sm">
           {t(`decks.${translationKey}.description`) || deck.description}
         </p>
         <div className="flex justify-between items-center">
-          <span className={`text-white/90 ${compact ? 'text-xs' : 'text-sm'} font-medium drop-shadow-sm`}>
+          <span className="text-white/90 text-sm font-medium drop-shadow-sm">
             {displayCardCount} {t('ui.cards')}
           </span>
           <motion.button
-            className={`bg-white/25 hover:bg-white/35 ${compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'} rounded-lg font-semibold transition-colors backdrop-blur-sm border border-white/20 text-white drop-shadow-sm`}
+            className="bg-white/25 hover:bg-white/35 px-4 py-2 text-sm rounded-3xl font-semibold tracking-tight transition-colors backdrop-blur-sm border border-white/20 text-white drop-shadow-sm"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -129,9 +129,9 @@ export function DeckCard({ deck, onClick, index, locale, cardCount, compact = fa
         </div>
       </div>
       
-      {/* Decorative elements */}
-      <div className={`absolute -top-4 -right-4 ${compact ? 'w-12 h-12' : 'w-16 h-16'} bg-white/5 rounded-full`}></div>
-      <div className={`absolute -bottom-6 -left-6 ${compact ? 'w-16 h-16' : 'w-20 h-20'} bg-white/5 rounded-full`}></div>
+      {/* Decorative elements - positioned within rounded corners */}
+      <div className="absolute top-2 right-2 w-16 h-16 bg-white/5 rounded-full"></div>
+      <div className="absolute bottom-2 left-2 w-20 h-20 bg-white/5 rounded-full"></div>
     </motion.div>
   );
 }

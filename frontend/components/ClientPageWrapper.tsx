@@ -76,9 +76,11 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
     }
   };
 
-  const handleVote = async (cardId: string, voteType: 'upvote' | 'downvote') => {
+  const handleVote = async (cardId: string, voteType: 'up' | 'down') => {
     try {
-      const success = await voteOnCard(cardId, voteType);
+      // Convert to the API format
+      const apiVoteType = voteType === 'up' ? 'upvote' : 'downvote';
+      const success = await voteOnCard(cardId, apiVoteType);
       if (!success) {
         console.error('Failed to vote on card');
       }
