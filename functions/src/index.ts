@@ -15,8 +15,19 @@ const app = express();
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: true, // Allow all origins for now
-  credentials: true
+  origin: [
+    'http://localhost:3000',
+    'https://games.burakintisah.com',
+    'https://games-burakintisah.vercel.app',
+    'https://games-burakintisah.netlify.app',
+    /\.vercel\.app$/,
+    /\.netlify\.app$/,
+    /\.firebase\.app$/,
+    /\.web\.app$/
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
 }));
 app.use(express.json());
 
