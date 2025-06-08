@@ -21,6 +21,7 @@ interface ClientPageWrapperProps {
 
 export function ClientPageWrapper({ children, locale, PageContent }: ClientPageWrapperProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShuffleMode, setIsShuffleMode] = useState(false); // Track if user is in shuffle mode
   
   // Use the conversation cards hook
   const {
@@ -40,6 +41,7 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
 
   const handleDeckClick = async (deckId: string) => {
     try {
+      setIsShuffleMode(false); // User clicked a specific deck, not shuffle mode
       await getRandomCardFromCategory(deckId, language);
       setIsModalOpen(true);
     } catch (error) {
@@ -50,7 +52,13 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
   const handleNewQuestion = async () => {
     if (currentCard) {
       try {
-        await getRandomCardFromCategory(currentCard.category, language);
+        if (isShuffleMode) {
+          // If in shuffle mode, get random card from any category
+          await getRandomCard(language);
+        } else {
+          // If in deck mode, get random card from same category
+          await getRandomCardFromCategory(currentCard.category, language);
+        }
       } catch (error) {
         console.error('Failed to get new question:', error);
       }
@@ -59,6 +67,7 @@ export function ClientPageWrapper({ children, locale, PageContent }: ClientPageW
 
   const handleShuffle = async () => {
     try {
+      setIsShuffleMode(true); // User clicked shuffle, enable shuffle mode
       await getRandomCard(language);
       setIsModalOpen(true);
     } catch (error) {
