@@ -17,181 +17,468 @@
 const API_BASE_URL = 'https://api-ptwvx3edda-ew.a.run.app';
 
 // Add your questions here - modify this array to add new questions
+// ─────────────────────────────────────────────────────────────
+// 🪞 Self-Knowledge – 50 questions split by difficulty
+// ─────────────────────────────────────────────────────────────
 const QUESTIONS = [
-  // Relationships Category Examples
-  {
-    question: {
-      en: "What's the most important quality you look for in a friend?",
-      tr: "Bir arkadaşta aradığın en önemli özellik nedir?"
+    // ───── Easy (16)
+    {
+      question: {
+        en: "What activity makes you lose track of time the fastest?",
+        tr: "Hangi etkinlik sana zamanı en hızlı unutturuyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["flow", "passion", "time"]
     },
-    category: "relationships",
-    difficulty: "easy",
-    tags: ["friendship", "qualities", "values"]
-  },
-  {
-    question: {
-      en: "How do you handle conflicts in your relationships?",
-      tr: "İlişkilerindeki çatışmaları nasıl çözüyorsun?"
+    {
+      question: {
+        en: "Which compliment do you find easiest to believe about yourself?",
+        tr: "Kendin hakkında inanması en kolay iltifat hangisi?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["compliments", "self-image", "positivity"]
     },
-    category: "relationships",
-    difficulty: "medium",
-    tags: ["conflict", "communication", "resolution"]
-  },
-  {
-    question: {
-      en: "What's the most vulnerable thing you've shared with someone?",
-      tr: "Biriyle paylaştığın en savunmasız kaldığın şey neydi?"
+    {
+      question: {
+        en: "Are you more energized by solitude or social gatherings?",
+        tr: "Yalnızlık mı yoksa sosyal buluşmalar mı sana daha çok enerji verir?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["energy", "introvert", "extrovert"]
     },
-    category: "relationships",
-    difficulty: "hard",
-    tags: ["vulnerability", "trust", "intimacy"]
-  },
+    {
+      question: {
+        en: "Which small habit improves your mood almost every time?",
+        tr: "Hangi küçük alışkanlık neredeyse her seferinde modunu yükseltir?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["habits", "mood", "wellbeing"]
+    },
+    {
+      question: {
+        en: "What type of weather best matches your natural temperament?",
+        tr: "Hangi hava durumu doğal mizacını en iyi yansıtır?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["weather", "temperament", "analogy"]
+    },
+    {
+      question: {
+        en: "Which childhood nickname still feels accurate today?",
+        tr: "Hangi çocukluk lakabı bugün bile sana uygun geliyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["nickname", "identity", "continuity"]
+    },
+    {
+      question: {
+        en: "Do you prefer clear plans or spontaneous adventures?",
+        tr: "Net planları mı yoksa spontane maceraları mı tercih edersin?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["planning", "spontaneity", "preference"]
+    },
+    {
+      question: {
+        en: "What physical space brings out your best ideas?",
+        tr: "Hangi fiziksel mekân en iyi fikirlerini ortaya çıkarıyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["environment", "creativity", "space"]
+    },
+    {
+      question: {
+        en: "Which sense (sight, sound, touch, taste, smell) is most vivid for you?",
+        tr: "Hangi duyu (görme, işitme, dokunma, tat, koku) senin için en belirgindir?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["senses", "vivid", "awareness"]
+    },
+    {
+      question: {
+        en: "When do you feel most confident in making quick decisions?",
+        tr: "Hızlı karar verirken kendine en çok ne zaman güvenirsin?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["confidence", "decision-making", "situations"]
+    },
+    {
+      question: {
+        en: "What color do you associate with calm, and why that color?",
+        tr: "Hangi rengi huzurla ilişkilendiriyorsun ve neden?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["color", "calm", "association"]
+    },
+    {
+      question: {
+        en: "Which season best aligns with your energy cycles?",
+        tr: "Enerji döngülerinle en çok hangi mevsim örtüşür?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["season", "energy", "cycles"]
+    },
+    {
+      question: {
+        en: "Do you recharge faster through sleep or through creative play?",
+        tr: "Uyku mu yoksa yaratıcı oyun mu seni daha hızlı şarj eder?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["recharge", "sleep", "creativity"]
+    },
+    {
+      question: {
+        en: "What everyday task gives you an unexpected sense of satisfaction?",
+        tr: "Hangi günlük iş beklenmedik bir tatmin hissi verir?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["tasks", "satisfaction", "routine"]
+    },
+    {
+      question: {
+        en: "Which genre of music describes your current life chapter?",
+        tr: "Hangi müzik türü şu anki hayat bölümünü tanımlar?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["music", "life-stage", "metaphor"]
+    },
+    {
+      question: {
+        en: "Do you learn better by reading, listening, or doing?",
+        tr: "Okuyarak mı dinleyerek mi yaparak mı daha iyi öğrenirsin?"
+      },
+      category: "self-knowledge",
+      difficulty: "easy",
+      tags: ["learning", "style", "preference"]
+    },
+  
+    // ───── Medium (17)
+    {
+      question: {
+        en: "Which personal value do you struggle to uphold under stress?",
+        tr: "Stres altındayken sürdürmekte zorlandığın hangi kişisel değer var?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["values", "stress", "consistency"]
+    },
+    {
+      question: {
+        en: "What assumption about yourself have you recently proven wrong?",
+        tr: "Kendinle ilgili hangi varsayımı yakın zamanda yanlış çıkardın?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["assumptions", "self-discovery", "change"]
+    },
+    {
+      question: {
+        en: "When do you notice your inner critic becoming loudest?",
+        tr: "İç eleştirmenin en çok ne zaman sesini yükseltiyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["inner-critic", "timing", "awareness"]
+    },
+    {
+      question: {
+        en: "What past version of yourself do you feel most compassion toward, and why?",
+        tr: "Geçmişteki hangi haline en çok şefkat duyuyorsun ve neden?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["self-compassion", "past-self", "growth"]
+    },
+    {
+      question: {
+        en: "Which relationship pattern have you consciously decided to break?",
+        tr: "Hangi ilişki kalıbını bilinçli olarak kırmaya karar verdin?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["patterns", "relationships", "change"]
+    },
+    {
+      question: {
+        en: "How do your ambitions differ from those of your childhood heroes?",
+        tr: "Hırsların çocukluk kahramanlarınınkinden nasıl farklı?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["ambitions", "heroes", "comparison"]
+    },
+    {
+      question: {
+        en: "When does seeking advice become avoidance of responsibility for you?",
+        tr: "Ne zaman tavsiye istemek senin için sorumluluktan kaçışa dönüşür?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["advice", "responsibility", "avoidance"]
+    },
+    {
+      question: {
+        en: "Which emotional trigger are you currently learning to anticipate?",
+        tr: "Şu sıralar hangi duygusal tetikleyiciyi öngörmeyi öğreniyorsun?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["triggers", "anticipation", "emotions"]
+    },
+    {
+      question: {
+        en: "How does your self-talk change when you shift from private thoughts to public speech?",
+        tr: "Özel düşüncelerden kamuya konuşmaya geçerken iç konuşman nasıl değişir?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["self-talk", "public", "shift"]
+    },
+    {
+      question: {
+        en: "What belief about success did you inherit, and what belief have you chosen instead?",
+        tr: "Başarı hakkında miras aldığın hangi inancı bıraktın ve yerine hangisini seçtin?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["success", "beliefs", "choice"]
+    },
+    {
+      question: {
+        en: "When do you feel most aligned between your thoughts, words, and actions?",
+        tr: "Düşüncelerinle sözlerin ve eylemlerin en çok ne zaman uyum içinde?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["alignment", "integrity", "moments"]
+    },
+    {
+      question: {
+        en: "Which small failure taught you a lesson you still rely on today?",
+        tr: "Hangi küçük başarısızlık sana bugün hâlâ güvendiğin bir ders verdi?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["failure", "lesson", "reliance"]
+    },
+    {
+      question: {
+        en: "How do you react physically when facing internal conflict?",
+        tr: "İçsel çatışma yaşarken fiziksel olarak nasıl tepki verirsin?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["body", "conflict", "signals"]
+    },
+    {
+      question: {
+        en: "When have you used humor to reveal a serious truth about yourself?",
+        tr: "Kendinle ilgili ciddi bir gerçeği ne zaman mizahla ortaya koydun?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["humor", "truth", "revelation"]
+    },
+    {
+      question: {
+        en: "Which part of your identity feels most misunderstood by others?",
+        tr: "Kimliğinin başkaları tarafından en yanlış anlaşılan yönü hangisi?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["identity", "misunderstanding", "others"]
+    },
+    {
+      question: {
+        en: "How do you balance accepting flaws with striving for improvement?",
+        tr: "Kusurları kabul etmekle gelişmeye çabalamak arasındaki dengeyi nasıl kuruyorsun?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["flaws", "acceptance", "improvement"]
+    },
+    {
+      question: {
+        en: "What recent insight about yourself surprised you the most?",
+        tr: "Kendinle ilgili seni en çok şaşırtan son içgörü nedir?"
+      },
+      category: "self-knowledge",
+      difficulty: "medium",
+      tags: ["insight", "surprise", "self-awareness"]
+    },
+  
+    // ───── Hard (17)
+    {
+      question: {
+        en: "Which contradiction within you have you learned to coexist with rather than resolve?",
+        tr: "İçindeki hangi çelişkiyle çözmek yerine birlikte yaşamayı öğrendin?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["contradiction", "coexistence", "acceptance"]
+    },
+    {
+      question: {
+        en: "When does self-honesty verge into self-cruelty for you?",
+        tr: "Kendine dürüstlük ne zaman kendine zulme dönüşür?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["self-honesty", "cruelty", "boundary"]
+    },
+    {
+      question: {
+        en: "What hidden narrative drives your greatest fear, and how was it written?",
+        tr: "En büyük korkunu tetikleyen gizli anlatı nedir ve nasıl yazıldı?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["fear", "narrative", "origin"]
+    },
+    {
+      question: {
+        en: "Which part of your self-image would collapse if you stopped achieving?",
+        tr: "Başarmayı bıraksaydın öz-imajının hangi kısmı çökerdi?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["achievement", "identity", "collapse"]
+    },
+    {
+      question: {
+        en: "How does your most persistent bias distort your interpretation of kindness?",
+        tr: "En inatçı önyargın nezaketi yorumlama biçimini nasıl çarpıtıyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["bias", "kindness", "distortion"]
+    },
+    {
+      question: {
+        en: "When have you confused loyalty to others with loyalty to your own values?",
+        tr: "Başkalarına sadakati kendi değerlerine sadakatle ne zaman karıştırdın?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["loyalty", "values", "confusion"]
+    },
+    {
+      question: {
+        en: "What aspect of your personality do you commodify for acceptance?",
+        tr: "Kabul görmek için kişiliğinin hangi yönünü meta hâline getiriyorsun?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["commodification", "acceptance", "personality"]
+    },
+    {
+      question: {
+        en: "Which internal boundary do you most frequently violate, and for what payoff?",
+        tr: "Hangi iç sınırını en sık ihlal ediyorsun ve bunun getirisi ne?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["boundaries", "violation", "payoff"]
+    },
+    {
+      question: {
+        en: "How does your relationship with mortality influence your daily priorities?",
+        tr: "Ölümle ilişkin günlük önceliklerini nasıl etkiliyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["mortality", "priorities", "awareness"]
+    },
+    {
+      question: {
+        en: "When does your pursuit of excellence mask a deeper sense of inadequacy?",
+        tr: "Mükemmeliyet arayışın ne zaman daha derin bir yetersizlik hissini gizler?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["excellence", "inadequacy", "mask"]
+    },
+    {
+      question: {
+        en: "What unfulfilled longing continues to shape your life choices covertly?",
+        tr: "Karşılanmamış hangi özlem hayat seçimlerini gizlice şekillendirmeye devam ediyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["longing", "choices", "covert"]
+    },
+    {
+      question: {
+        en: "Which version of your future self do you secretly fear becoming?",
+        tr: "Gelecekteki hangi haline gizlice dönüşmekten korkuyorsun?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["future-self", "fear", "transformation"]
+    },
+    {
+      question: {
+        en: "How has regret shaped the architecture of your current moral code?",
+        tr: "Pişmanlık mevcut ahlaki kodunun mimarisini nasıl şekillendirdi?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["regret", "morality", "architecture"]
+    },
+    {
+      question: {
+        en: "What would unconditional self-acceptance demand you abandon?",
+        tr: "Koşulsuz öz-kabul senden neyi terk etmeni gerektirirdi?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["self-acceptance", "abandon", "identity"]
+    },
+    {
+      question: {
+        en: "When does resilience transform into unhealthy endurance in your life?",
+        tr: "Direnç hayatında ne zaman sağlıksız bir tahammüle dönüşüyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["resilience", "endurance", "threshold"]
+    },
+    {
+      question: {
+        en: "Which unseen part of your shadow self occasionally asserts control?",
+        tr: "Gölge benliğinin hangi görünmez parçası zaman zaman kontrolü ele geçiriyor?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["shadow", "control", "psyche"]
+    },
+    {
+      question: {
+        en: "How do you distinguish surrender to reality from resignation to mediocrity?",
+        tr: "Gerçekliğe teslimiyeti vasatlığa boyun eğmekten nasıl ayırt ediyorsun?"
+      },
+      category: "self-knowledge",
+      difficulty: "hard",
+      tags: ["surrender", "mediocrity", "discernment"]
+    }
+  ];
+  
 
-  // Self-Knowledge Category Examples
-  {
-    question: {
-      en: "What's your biggest strength and how do you use it?",
-      tr: "En büyük gücün nedir ve onu nasıl kullanıyorsun?"
-    },
-    category: "self-knowledge",
-    difficulty: "easy",
-    tags: ["strengths", "self-awareness", "personal-growth"]
-  },
-  {
-    question: {
-      en: "What pattern do you notice repeating in your life?",
-      tr: "Hayatında tekrar eden hangi kalıbı fark ediyorsun?"
-    },
-    category: "self-knowledge",
-    difficulty: "medium",
-    tags: ["patterns", "habits", "self-reflection"]
-  },
-  {
-    question: {
-      en: "What's the deepest fear that holds you back from being your authentic self?",
-      tr: "Gerçek benliğin olmaktan seni alıkoyan en derin korku nedir?"
-    },
-    category: "self-knowledge",
-    difficulty: "hard",
-    tags: ["fear", "authenticity", "self-acceptance"]
-  },
-
-  // Work Category Examples
-  {
-    question: {
-      en: "What motivates you most at work?",
-      tr: "İşte seni en çok motive eden şey nedir?"
-    },
-    category: "work",
-    difficulty: "easy",
-    tags: ["motivation", "career", "purpose"]
-  },
-  {
-    question: {
-      en: "How do you balance ambition with contentment in your career?",
-      tr: "Kariyerinde hırsla memnuniyeti nasıl dengeliyorsun?"
-    },
-    category: "work",
-    difficulty: "medium",
-    tags: ["ambition", "balance", "satisfaction"]
-  },
-  {
-    question: {
-      en: "What would you do professionally if money wasn't a factor?",
-      tr: "Para bir faktör olmasaydı profesyonel olarak ne yapardın?"
-    },
-    category: "work",
-    difficulty: "hard",
-    tags: ["passion", "purpose", "dreams"]
-  },
-
-  // Culture Category Examples
-  {
-    question: {
-      en: "What tradition from your culture do you value most?",
-      tr: "Kültürünün hangi geleneğine en çok değer veriyorsun?"
-    },
-    category: "culture",
-    difficulty: "easy",
-    tags: ["tradition", "heritage", "values"]
-  },
-  {
-    question: {
-      en: "How has your cultural background shaped your worldview?",
-      tr: "Kültürel geçmişin dünya görüşünü nasıl şekillendirdi?"
-    },
-    category: "culture",
-    difficulty: "medium",
-    tags: ["worldview", "identity", "perspective"]
-  },
-  {
-    question: {
-      en: "What aspects of other cultures do you wish were more present in your own?",
-      tr: "Diğer kültürlerin hangi yönlerinin kendi kültüründe daha fazla olmasını istiyorsun?"
-    },
-    category: "culture",
-    difficulty: "hard",
-    tags: ["cultural-exchange", "diversity", "learning"]
-  },
-
-  // Philosophy Category Examples
-  {
-    question: {
-      en: "What do you think is the meaning of life?",
-      tr: "Hayatın anlamının ne olduğunu düşünüyorsun?"
-    },
-    category: "philosophy",
-    difficulty: "easy",
-    tags: ["meaning", "purpose", "existence"]
-  },
-  {
-    question: {
-      en: "Do you believe people are fundamentally good or bad?",
-      tr: "İnsanların temelde iyi mi kötü mü olduğuna inanıyorsun?"
-    },
-    category: "philosophy",
-    difficulty: "medium",
-    tags: ["human-nature", "morality", "beliefs"]
-  },
-  {
-    question: {
-      en: "If you could know the absolute truth about one thing, what would it be?",
-      tr: "Bir şey hakkında mutlak gerçeği bilebilseydin, bu ne olurdu?"
-    },
-    category: "philosophy",
-    difficulty: "hard",
-    tags: ["truth", "knowledge", "curiosity"]
-  },
-
-  // Childhood Category Examples
-  {
-    question: {
-      en: "What's your favorite childhood memory?",
-      tr: "En sevdiğin çocukluk anın nedir?"
-    },
-    category: "childhood",
-    difficulty: "easy",
-    tags: ["memories", "nostalgia", "happiness"]
-  },
-  {
-    question: {
-      en: "What did you want to be when you grew up, and how does that relate to who you are now?",
-      tr: "Büyüdüğünde ne olmak istiyordun ve bu şu anki halinle nasıl ilişkili?"
-    },
-    category: "childhood",
-    difficulty: "medium",
-    tags: ["dreams", "growth", "identity"]
-  },
-  {
-    question: {
-      en: "What childhood experience most shaped who you became as an adult?",
-      tr: "Hangi çocukluk deneyimi yetişkin olarak kim olduğunu en çok şekillendirdi?"
-    },
-    category: "childhood",
-    difficulty: "hard",
-    tags: ["formative-experiences", "development", "influence"]
-  }
-];
 
 // Utility functions
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
