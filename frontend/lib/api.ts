@@ -1,6 +1,6 @@
 import type { ConversationCard, SupportedLanguage } from '../../shared/src';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api-ptwvx3edda-ew.a.run.app';
 
 // API Response types
 interface ApiResponse<T> {
@@ -95,7 +95,7 @@ export class ConversationCardsAPI {
 
   // Health check
   async healthCheck(): Promise<ApiResponse<any>> {
-    return this.request('/api/health');
+    return this.request('/health');
   }
 
   // Get all conversation cards
@@ -115,14 +115,14 @@ export class ConversationCardsAPI {
     if (params.offset) searchParams.append('offset', params.offset.toString());
 
     const query = searchParams.toString();
-    const endpoint = `/api/v1/conversation-cards${query ? `?${query}` : ''}`;
+    const endpoint = `/v1/conversation-cards${query ? `?${query}` : ''}`;
     
     return this.request<CardsListData>(endpoint);
   }
 
   // Get category counts
   async getCategoryCounts(): Promise<ApiResponse<CategoryCountsData>> {
-    return this.request<CategoryCountsData>('/api/v1/conversation-cards/categories/count');
+    return this.request<CategoryCountsData>('/v1/conversation-cards/categories/count');
   }
 
   // Get random cards
@@ -140,7 +140,7 @@ export class ConversationCardsAPI {
     if (params.language) searchParams.append('language', params.language);
 
     const query = searchParams.toString();
-    const endpoint = `/api/v1/conversation-cards/random${query ? `?${query}` : ''}`;
+    const endpoint = `/v1/conversation-cards/random${query ? `?${query}` : ''}`;
     
     return this.request<RandomCardsData>(endpoint);
   }
@@ -151,7 +151,7 @@ export class ConversationCardsAPI {
     if (language) searchParams.append('language', language);
     
     const query = searchParams.toString();
-    const endpoint = `/api/v1/conversation-cards/${cardId}${query ? `?${query}` : ''}`;
+    const endpoint = `/v1/conversation-cards/${cardId}${query ? `?${query}` : ''}`;
     
     return this.request<ConversationCard>(endpoint);
   }
@@ -163,7 +163,7 @@ export class ConversationCardsAPI {
     difficulty: 'easy' | 'medium' | 'hard';
     tags?: string[];
   }): Promise<ApiResponse<ConversationCard>> {
-    return this.request<ConversationCard>('/api/v1/conversation-cards', {
+    return this.request<ConversationCard>('/v1/conversation-cards', {
       method: 'POST',
       body: JSON.stringify(cardData),
     });
@@ -176,7 +176,7 @@ export class ConversationCardsAPI {
     difficulty?: 'easy' | 'medium' | 'hard';
     tags?: string[];
   }): Promise<ApiResponse<ConversationCard>> {
-    return this.request<ConversationCard>(`/api/v1/conversation-cards/${cardId}`, {
+    return this.request<ConversationCard>(`/v1/conversation-cards/${cardId}`, {
       method: 'PUT',
       body: JSON.stringify(cardData),
     });
@@ -184,14 +184,14 @@ export class ConversationCardsAPI {
 
   // Delete card
   async deleteCard(cardId: string): Promise<ApiResponse<{ deletedCardId: string }>> {
-    return this.request<{ deletedCardId: string }>(`/api/v1/conversation-cards/${cardId}`, {
+    return this.request<{ deletedCardId: string }>(`/v1/conversation-cards/${cardId}`, {
       method: 'DELETE',
     });
   }
 
   // Vote on card
   async voteOnCard(cardId: string, voteType: 'upvote' | 'downvote'): Promise<ApiResponse<VoteData>> {
-    return this.request<VoteData>(`/api/v1/conversation-cards/${cardId}/vote`, {
+    return this.request<VoteData>(`/v1/conversation-cards/${cardId}/vote`, {
       method: 'POST',
       body: JSON.stringify({ voteType }),
     });
@@ -199,7 +199,7 @@ export class ConversationCardsAPI {
 
   // Get vote statistics
   async getVoteStats(cardId: string): Promise<ApiResponse<VoteStatsData>> {
-    return this.request<VoteStatsData>(`/api/v1/conversation-cards/${cardId}/votes`);
+    return this.request<VoteStatsData>(`/v1/conversation-cards/${cardId}/votes`);
   }
 }
 
