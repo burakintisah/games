@@ -1,6 +1,7 @@
 // Core game types
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
 export type SupportedLanguage = 'en' | 'tr';
+export type GameMode = 'conversation-cards' | 'emoji-decoder';
 
 export interface MultilingualText {
   en: string;
@@ -13,11 +14,9 @@ export interface ConversationCard {
   category: string;
   difficulty: DifficultyLevel;
   tags: string[];
-  // Voting properties (optional for backward compatibility)
   upvotes?: number;
   downvotes?: number;
   totalVotes?: number;
-  // Timestamps (optional, added by backend)
   createdAt?: string;
   updatedAt?: string;
 }
@@ -29,6 +28,15 @@ export interface ConversationDeck {
   color: string;
   icon: string;
   cards: ConversationCard[];
+}
+
+export interface EmojiPuzzle {
+  id: string;
+  emojis: string;
+  answer: MultilingualText;
+  hint: MultilingualText;
+  category: string;
+  difficulty: DifficultyLevel;
 }
 
 // API response types

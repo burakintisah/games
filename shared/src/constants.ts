@@ -6,8 +6,15 @@ export const SUPPORTED_LANGUAGES = [
 export const GAME_MODES = [
   {
     id: 'conversation-cards',
-    name: 'Conversation Cards',
-    description: 'Deep, meaningful conversations with thought-provoking questions'
+    nameKey: 'gameModes.conversationCards',
+    descKey: 'gameModes.conversationCardsDesc',
+    icon: '💬',
+  },
+  {
+    id: 'emoji-decoder',
+    nameKey: 'gameModes.emojiDecoder',
+    descKey: 'gameModes.emojiDecoderDesc',
+    icon: '🧩',
   }
 ] as const;
 

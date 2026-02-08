@@ -5,4 +5,5 @@ export * from './types';
 export * from './constants';
 
 // Export all data
-export * from './data/questions'; 
+export * from './data/questions';
+export * from './data/emojiPuzzles';

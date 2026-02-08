@@ -6,7 +6,9 @@
   },
   "gameModes": {
     "conversationCards": "Conversation Cards",
-    "conversationCardsDesc": "Deep, meaningful conversations with thought-provoking questions"
+    "conversationCardsDesc": "Deep, meaningful conversations with thought-provoking questions",
+    "emojiDecoder": "Emoji Decoder",
+    "emojiDecoderDesc": "Guess the word or phrase from emoji clues"
   },
   "decks": {
     "relationships": {
@@ -51,7 +53,27 @@
       "hard": "Hard"
     }
   },
+  "emoji": {
+    "title": "Emoji Decoder",
+    "subtitle": "Guess the word or phrase from emoji clues!",
+    "showHint": "Show Hint",
+    "revealAnswer": "Reveal Answer",
+    "nextPuzzle": "Next",
+    "prevPuzzle": "Previous",
+    "puzzleOf": "of",
+    "score": "Score",
+    "gotIt": "Got It!",
+    "skip": "Skip",
+    "hintLabel": "Hint",
+    "answerLabel": "Answer",
+    "allCategories": "All",
+    "playAgain": "Play Again",
+    "congratulations": "Well Done!",
+    "finalScore": "Your Score",
+    "correct": "Correct",
+    "skipped": "Skipped"
+  },
   "errors": {
     "voteError": "Failed to submit vote. Please try again."
   }
-} 
+}

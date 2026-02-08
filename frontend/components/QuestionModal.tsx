@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, RefreshCw, CheckCircle, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
+import { X, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
 import type { ConversationCard } from '../../shared/src';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 import { LoadingSpinner } from './LoadingSpinner';
@@ -30,19 +30,18 @@ const getDeckTranslationKey = (category: string) => {
     'philosophy': 'philosophy',
     'childhood': 'childhood',
   };
-  
+
   return keyMap[category] || category;
 };
 
-// Card flip animation variants
 const cardVariants = {
-  hidden: { 
-    rotateY: -90, 
+  hidden: {
+    rotateY: -90,
     opacity: 0,
     scale: 0.8,
   },
-  visible: { 
-    rotateY: 0, 
+  visible: {
+    rotateY: 0,
     opacity: 1,
     scale: 1,
     transition: {
@@ -52,8 +51,8 @@ const cardVariants = {
       duration: 0.6,
     }
   },
-  exit: { 
-    rotateY: 90, 
+  exit: {
+    rotateY: 90,
     opacity: 0,
     scale: 0.8,
     transition: {
@@ -64,21 +63,33 @@ const cardVariants = {
 
 const overlayVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: { duration: 0.3 }
   },
-  exit: { 
+  exit: {
     opacity: 0,
     transition: { duration: 0.2 }
   }
 };
 
-export function QuestionModal({ 
-  question, 
-  isOpen, 
-  onClose, 
-  onNewQuestion, 
+function getCategoryIcon(category: string): string {
+  const icons: Record<string, string> = {
+    'relationships': '💕',
+    'self-knowledge': '🧠',
+    'work': '💼',
+    'culture': '🎭',
+    'philosophy': '🤔',
+    'childhood': '🧸',
+  };
+  return icons[category] || '💭';
+}
+
+export function QuestionModal({
+  question,
+  isOpen,
+  onClose,
+  onNewQuestion,
   onVote,
   locale,
   isLoading = false,
@@ -90,7 +101,6 @@ export function QuestionModal({
   const [hasVoted, setHasVoted] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
 
-  // Reset vote state when card changes - must be before early return
   useEffect(() => {
     setHasVoted(false);
     setVoteError(null);
@@ -98,29 +108,25 @@ export function QuestionModal({
 
   if (!isOpen) return null;
 
-  // Get the appropriate language version of the question
   const getQuestionText = () => {
     if (!question) return '';
-    
     if (typeof question.question === 'string') {
-      // Backward compatibility for old format
       return question.question;
     }
-    // New multilingual format
     const lang = locale === 'tr' ? 'tr' : 'en';
-    return question.question[lang] || question.question.en || 'Question not available';
+    return question.question[lang] || question.question.en || '';
   };
 
   const handleVote = async (voteType: 'up' | 'down') => {
     if (!question || !onVote || hasVoted || isVoting) return;
-    
+
     try {
       setVoteError(null);
       await onVote(question.id, voteType);
       setHasVoted(true);
-    } catch (error) {
+    } catch (err) {
       setVoteError(t('errors.voteError'));
-      console.error('Vote error:', error);
+      console.error('Vote error:', err);
     }
   };
 
@@ -143,7 +149,7 @@ export function QuestionModal({
           animate="visible"
           exit="exit"
           onClick={(e) => e.stopPropagation()}
-          style={{ 
+          style={{
             perspective: 1000,
             transformStyle: "preserve-3d"
           }}
@@ -158,8 +164,9 @@ export function QuestionModal({
                     <h2 className="text-lg font-semibold text-gray-900 capitalize">
                       {t(`decks.${translationKey}.name`)}
                     </h2>
-                    <p className="text-sm text-gray-500 capitalize">
-                      {question.difficulty} • {question.tags?.join(', ')}
+                    <p className="text-sm text-gray-500">
+                      {t(`ui.difficulty.${question.difficulty}`)}
+                      {question.tags?.length ? ` \u2022 ${question.tags.join(', ')}` : ''}
                     </p>
                   </div>
                 </>
@@ -181,13 +188,13 @@ export function QuestionModal({
                 <p className="text-gray-600 mt-4">{t('ui.loadingQuestion')}</p>
               </div>
             ) : error ? (
-              <ErrorMessage 
-                message={error} 
+              <ErrorMessage
+                message={error}
                 onRetry={onRetry}
               />
             ) : question ? (
               <div className="text-center">
-                <motion.p 
+                <motion.p
                   className="text-xl md:text-2xl text-gray-800 leading-relaxed mb-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -197,7 +204,7 @@ export function QuestionModal({
                 </motion.p>
 
                 {/* Voting Section */}
-                <motion.div 
+                <motion.div
                   className="flex justify-center items-center space-x-4 mb-6"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -207,8 +214,8 @@ export function QuestionModal({
                     onClick={() => handleVote('up')}
                     disabled={hasVoted || isVoting}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 ${
-                      hasVoted 
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                      hasVoted
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-green-50 hover:bg-green-100 text-green-600 hover:scale-105'
                     }`}
                   >
@@ -222,8 +229,8 @@ export function QuestionModal({
                     onClick={() => handleVote('down')}
                     disabled={hasVoted || isVoting}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 ${
-                      hasVoted 
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                      hasVoted
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-red-50 hover:bg-red-100 text-red-600 hover:scale-105'
                     }`}
                   >
@@ -235,7 +242,7 @@ export function QuestionModal({
                 </motion.div>
 
                 {voteError && (
-                  <motion.p 
+                  <motion.p
                     className="text-red-500 text-sm mb-4"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -245,7 +252,7 @@ export function QuestionModal({
                 )}
 
                 {hasVoted && (
-                  <motion.p 
+                  <motion.p
                     className="text-green-600 text-sm mb-4"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -265,7 +272,7 @@ export function QuestionModal({
             >
               {t('ui.close')}
             </button>
-            
+
             <motion.button
               onClick={onNewQuestion}
               disabled={isLoading}
@@ -281,16 +288,4 @@ export function QuestionModal({
       </motion.div>
     </AnimatePresence>
   );
-}
-
-function getCategoryIcon(category: string): string {
-  const icons: Record<string, string> = {
-    'relationships': '💕',
-    'self-knowledge': '🧠',
-    'work': '💼',
-    'culture': '🎭',
-    'philosophy': '🤔',
-    'childhood': '🧸',
-  };
-  return icons[category] || '💭';
 }
