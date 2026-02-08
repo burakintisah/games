@@ -1,12 +1,14 @@
 {
   "navigation": {
     "games": "Oyunlar",
-    "byAuthor": "Burak Intisah tarafından",
+    "byAuthor": "Burak Intisah",
     "shuffle": "Karıştır"
   },
   "gameModes": {
     "conversationCards": "Sohbet Kartları",
-    "conversationCardsDesc": "Düşündürücü sorularla derin ve anlamlı sohbetler"
+    "conversationCardsDesc": "Düşündürücü sorularla derin ve anlamlı sohbetler",
+    "emojiDecoder": "Emoji Bulmaca",
+    "emojiDecoderDesc": "Emoji ipuçlarından kelime veya cümleyi tahmin et"
   },
   "decks": {
     "relationships": {
@@ -51,7 +53,27 @@
       "hard": "Zor"
     }
   },
+  "emoji": {
+    "title": "Emoji Bulmaca",
+    "subtitle": "Emoji ipuçlarından kelime veya cümleyi tahmin et!",
+    "showHint": "İpucu Göster",
+    "revealAnswer": "Cevabı Göster",
+    "nextPuzzle": "Sonraki",
+    "prevPuzzle": "Önceki",
+    "puzzleOf": "/",
+    "score": "Puan",
+    "gotIt": "Bildim!",
+    "skip": "Geç",
+    "hintLabel": "İpucu",
+    "answerLabel": "Cevap",
+    "allCategories": "Hepsi",
+    "playAgain": "Tekrar Oyna",
+    "congratulations": "Tebrikler!",
+    "finalScore": "Puanın",
+    "correct": "Doğru",
+    "skipped": "Geçilen"
+  },
   "errors": {
     "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin."
   }
-} 
+}

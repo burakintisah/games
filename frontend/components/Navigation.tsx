@@ -4,22 +4,22 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Gamepad2, Globe, ChevronDown, Shuffle } from 'lucide-react';
 import { SUPPORTED_LANGUAGES, GAME_MODES } from '../../shared/src';
+import type { GameMode } from '../../shared/src';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 
 interface NavigationProps {
-  onShuffleMode: () => void;
+  onShuffleMode?: () => void;
   locale: string;
-  onGameModeChange?: (gameMode: typeof GAME_MODES[number]) => void;
+  activeGameMode: GameMode;
+  onGameModeChange: (mode: GameMode) => void;
 }
 
-export function Navigation({ onShuffleMode, locale, onGameModeChange }: NavigationProps) {
+export function Navigation({ onShuffleMode, locale, activeGameMode, onGameModeChange }: NavigationProps) {
   const { t } = useClientTranslation(locale);
   const [selectedLanguage, setSelectedLanguage] = useState<typeof SUPPORTED_LANGUAGES[number]>(SUPPORTED_LANGUAGES[0]);
-  const [selectedGameMode, setSelectedGameMode] = useState<typeof GAME_MODES[number]>(GAME_MODES[0]);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isGameModeOpen, setIsGameModeOpen] = useState(false);
 
-  // Update selected language when locale changes
   useEffect(() => {
     const language = SUPPORTED_LANGUAGES.find(lang => lang.code === locale);
     if (language) {
@@ -30,33 +30,21 @@ export function Navigation({ onShuffleMode, locale, onGameModeChange }: Navigati
   const handleLanguageChange = (language: typeof SUPPORTED_LANGUAGES[number]) => {
     setSelectedLanguage(language);
     setIsLanguageOpen(false);
-    
-    // Navigate to new locale
     const currentPath = window.location.pathname.replace(/^\/[a-z]{2}/, '');
     window.location.href = `/${language.code}${currentPath}`;
   };
 
-  const handleGameModeChange = (gameMode: typeof GAME_MODES[number]) => {
-    setSelectedGameMode(gameMode);
+  const handleGameModeChange = (mode: typeof GAME_MODES[number]) => {
     setIsGameModeOpen(false);
-    
-    // Save preference to localStorage
-    localStorage.setItem('preferred-game-mode', gameMode.id);
-    
-    // Notify parent component
-    onGameModeChange?.(gameMode);
+    onGameModeChange(mode.id as GameMode);
   };
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      
-      // Don't close if clicking on dropdown buttons or their children
       if (target.closest('[data-dropdown-button]') || target.closest('[data-dropdown-content]')) {
         return;
       }
-      
       setIsLanguageOpen(false);
       setIsGameModeOpen(false);
     };
@@ -65,8 +53,11 @@ export function Navigation({ onShuffleMode, locale, onGameModeChange }: Navigati
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
+  const activeMode = GAME_MODES.find(m => m.id === activeGameMode) || GAME_MODES[0];
+  const showShuffle = activeGameMode === 'conversation-cards';
+
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -75,7 +66,7 @@ export function Navigation({ onShuffleMode, locale, onGameModeChange }: Navigati
       <div className="container mx-auto px-3 md:px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
-          <motion.div 
+          <motion.div
             className="flex items-center gap-2 md:gap-3"
             whileHover={{ scale: 1.02 }}
           >
@@ -128,7 +119,7 @@ export function Navigation({ onShuffleMode, locale, onGameModeChange }: Navigati
                       <span>{language.flag}</span>
                       <span className="text-xs md:text-sm font-medium">{language.name}</span>
                       {selectedLanguage.code === language.code && (
-                        <div className="ml-auto w-2 h-2 bg-violet-600 rounded-full"></div>
+                        <div className="ml-auto w-2 h-2 bg-violet-600 rounded-full" />
                       )}
                     </button>
                   ))}
@@ -149,8 +140,9 @@ export function Navigation({ onShuffleMode, locale, onGameModeChange }: Navigati
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
+                <span className="text-sm hidden md:inline">{activeMode.icon}</span>
                 <span className="text-xs md:text-sm font-medium truncate max-w-20 md:max-w-none">
-                  {t('gameModes.conversationCards')}
+                  {t(activeMode.nameKey)}
                 </span>
                 <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform ${isGameModeOpen ? 'rotate-180' : ''}`} />
               </motion.button>
@@ -165,30 +157,38 @@ export function Navigation({ onShuffleMode, locale, onGameModeChange }: Navigati
                     <button
                       key={mode.id}
                       onClick={() => handleGameModeChange(mode)}
-                      className={`flex flex-col items-start gap-1 px-3 md:px-4 py-2 md:py-3 hover:bg-gray-50 transition-colors w-full text-left ${
-                        selectedGameMode.id === mode.id ? 'bg-violet-50' : ''
+                      className={`flex items-start gap-3 px-3 md:px-4 py-2 md:py-3 hover:bg-gray-50 transition-colors w-full text-left ${
+                        activeGameMode === mode.id ? 'bg-violet-50' : ''
                       }`}
                     >
-                      <span className={`text-xs md:text-sm font-medium ${
-                        selectedGameMode.id === mode.id ? 'text-violet-700' : 'text-gray-900'
-                      }`}>{t('gameModes.conversationCards')}</span>
-                      <span className="text-xs text-gray-500 hidden md:block">{t('gameModes.conversationCardsDesc')}</span>
+                      <span className="text-lg mt-0.5">{mode.icon}</span>
+                      <div className="flex flex-col">
+                        <span className={`text-xs md:text-sm font-medium ${
+                          activeGameMode === mode.id ? 'text-violet-700' : 'text-gray-900'
+                        }`}>{t(mode.nameKey)}</span>
+                        <span className="text-xs text-gray-500 hidden md:block">{t(mode.descKey)}</span>
+                      </div>
+                      {activeGameMode === mode.id && (
+                        <div className="ml-auto mt-1 w-2 h-2 bg-violet-600 rounded-full flex-shrink-0" />
+                      )}
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Quick Shuffle Button - Desktop Only */}
-            <motion.button
-              onClick={onShuffleMode}
-              className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg font-medium text-sm shadow-md hover:shadow-lg transition-all"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Shuffle className="w-4 h-4" />
-              <span>{t('navigation.shuffle')}</span>
-            </motion.button>
+            {/* Quick Shuffle Button - Only for Conversation Cards, Desktop Only */}
+            {showShuffle && onShuffleMode && (
+              <motion.button
+                onClick={onShuffleMode}
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-lg font-medium text-sm shadow-md hover:shadow-lg transition-all"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Shuffle className="w-4 h-4" />
+                <span>{t('navigation.shuffle')}</span>
+              </motion.button>
+            )}
           </div>
         </div>
       </div>
