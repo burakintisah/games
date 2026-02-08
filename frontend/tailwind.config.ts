@@ -8,6 +8,9 @@ const config: Config = {
     '../shared/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontFamily: {
+      sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+    },
     extend: {
       // WCAG-compliant gradient utilities for conversation card categories
       backgroundImage: {
