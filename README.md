@@ -234,8 +234,18 @@ The Firebase Functions backend provides a comprehensive REST API:
 
 ## 🚀 Deployment
 
-### Production Deployment
-The application is deployed using Firebase:
+### CI/CD (GitHub Actions)
+
+Pushing to `main` automatically triggers a full build and deploy pipeline via GitHub Actions:
+
+1. Installs dependencies
+2. Builds packages in order: `shared` → `frontend` → `functions`
+3. Runs ESLint on frontend
+4. Deploys Cloud Functions and Hosting to Firebase
+
+**Required secret:** `FIREBASE_SERVICE_ACCOUNT_GAMES_123F7` — a Firebase service account JSON key stored in GitHub repo Settings → Secrets → Actions.
+
+### Manual Deployment
 
 ```bash
 # Build shared package
