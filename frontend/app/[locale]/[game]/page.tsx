@@ -13,6 +13,7 @@ import { CONVERSATION_DECKS } from '../../../../shared/src';
 import type { GameMode, SupportedLanguage } from '../../../../shared/src';
 import { useConversationCards } from '../../../hooks/useConversationCards';
 import { useClientTranslation } from '../../../hooks/useClientTranslation';
+import { useReducedMotion } from '../../../hooks/useReducedMotion';
 import { motion } from 'framer-motion';
 import { Shuffle } from 'lucide-react';
 
@@ -25,23 +26,23 @@ function chunkPairs<T>(arr: T[]): T[][] {
   return result;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
+const containerVariants = (reduced: boolean) => ({
+  hidden: { opacity: reduced ? 1 : 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    transition: reduced ? {} : { staggerChildren: 0.1, delayChildren: 0.2 }
   }
-};
+});
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.8 },
+const itemVariants = (reduced: boolean) => ({
+  hidden: reduced ? { opacity: 1 } : { opacity: 0, y: 20, scale: 0.8 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 100, damping: 10 }
+    transition: reduced ? {} : { type: "spring", stiffness: 100, damping: 10 }
   }
-};
+});
 
 export default function GamePage({ params: { locale, game } }: { params: { locale: string; game: string } }) {
   const activeGameMode = game as GameMode;
@@ -53,6 +54,7 @@ export default function GamePage({ params: { locale, game } }: { params: { local
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShuffleMode, setIsShuffleMode] = useState(false);
   const { t } = useClientTranslation(locale);
+  const prefersReducedMotion = useReducedMotion();
 
   const {
     categoryCounts,
@@ -63,6 +65,7 @@ export default function GamePage({ params: { locale, game } }: { params: { local
     cardError,
     getRandomCard,
     getRandomCardFromCategory,
+    refreshCategories,
     voteOnCard,
   } = useConversationCards();
 
@@ -133,8 +136,10 @@ export default function GamePage({ params: { locale, game } }: { params: { local
             <div className="pt-24 pb-12 px-4">
               <div className="container mx-auto max-w-6xl">
                 <ErrorMessage
-                  message={`Failed to load categories: ${categoryError}`}
-                  onRetry={() => window.location.reload()}
+                  message={categoryError}
+                  title={t('errors.somethingWentWrong')}
+                  retryLabel={t('errors.tryAgain')}
+                  onRetry={() => refreshCategories()}
                 />
               </div>
             </div>
@@ -212,12 +217,12 @@ export default function GamePage({ params: { locale, game } }: { params: { local
                 <div className="container mx-auto max-w-6xl">
                   <motion.div
                     className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    variants={containerVariants}
+                    variants={containerVariants(prefersReducedMotion)}
                     initial="hidden"
                     animate="show"
                   >
                     {decksWithCounts.map((deck, index) => (
-                      <motion.div key={deck.id} variants={itemVariants}>
+                      <motion.div key={deck.id} variants={itemVariants(prefersReducedMotion)}>
                         <DeckCard
                           deck={deck}
                           index={index}

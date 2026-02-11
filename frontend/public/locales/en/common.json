@@ -127,6 +127,8 @@
     "roundWinner": "Point goes to"
   },
   "errors": {
-    "voteError": "Failed to submit vote. Please try again."
+    "voteError": "Failed to submit vote. Please try again.",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Try Again"
   }
 }

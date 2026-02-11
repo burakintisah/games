@@ -32,7 +32,7 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
     setSelectedLanguage(language);
     setIsLanguageOpen(false);
     const currentPath = window.location.pathname.replace(/^\/[a-z]{2}/, '');
-    window.location.href = `/${language.code}${currentPath}`;
+    router.push(`/${language.code}${currentPath}`);
   };
 
   const handleGameModeChange = (mode: typeof GAME_MODES[number]) => {
@@ -50,8 +50,19 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
       setIsGameModeOpen(false);
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsLanguageOpen(false);
+        setIsGameModeOpen(false);
+      }
+    };
+
     document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const activeMode = GAME_MODES.find(m => m.id === activeGameMode) || GAME_MODES[0];
@@ -86,6 +97,9 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
             <div className="relative">
               <motion.button
                 data-dropdown-button
+                aria-expanded={isLanguageOpen}
+                aria-haspopup="listbox"
+                aria-label="Select language"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsLanguageOpen(!isLanguageOpen);
@@ -106,6 +120,8 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
               {isLanguageOpen && (
                 <div
                   data-dropdown-content
+                  role="listbox"
+                  aria-label="Available languages"
                   className="absolute top-full mt-2 right-0 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 min-w-32 md:min-w-48 animate-in fade-in-0 zoom-in-95 duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -132,6 +148,9 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
             <div className="relative">
               <motion.button
                 data-dropdown-button
+                aria-expanded={isGameModeOpen}
+                aria-haspopup="listbox"
+                aria-label="Select game mode"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsGameModeOpen(!isGameModeOpen);
@@ -151,6 +170,8 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
               {isGameModeOpen && (
                 <div
                   data-dropdown-content
+                  role="listbox"
+                  aria-label="Available game modes"
                   className="absolute top-full mt-2 right-0 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 min-w-48 md:min-w-64 animate-in fade-in-0 zoom-in-95 duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >

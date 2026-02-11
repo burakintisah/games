@@ -20,8 +20,7 @@ interface AdminState {
 
 const CATEGORIES = ['relationships', 'self-knowledge', 'work', 'culture', 'philosophy', 'childhood'];
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
-const ADMIN_PASSWORD = 'games2024admin'; // In production, this should be environment variable
-const AUTH_STORAGE_KEY = 'admin_authenticated';
+const AUTH_TOKEN_KEY = 'admin_api_token';
 
 export default function AdminPanel() {
   const [state, setState] = useState<AdminState>({
@@ -47,50 +46,58 @@ export default function AdminPanel() {
 
   // Check authentication on component mount
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
-    if (isAuthenticated) {
+    const token = localStorage.getItem(AUTH_TOKEN_KEY);
+    if (token) {
       setState(prev => ({ ...prev, isAuthenticated: true }));
-      loadCards();
+      loadCards(token);
     }
   }, []);
 
   // Load cards after authentication
-  const loadCards = async () => {
+  const loadCards = async (token?: string) => {
+    const apiToken = token || localStorage.getItem(AUTH_TOKEN_KEY);
+    if (!apiToken) return;
+
     setState(prev => ({ ...prev, isLoading: true, error: null }));
     try {
-      // Use the admin endpoint to get raw multilingual data
-      const response = await conversationCardsAPI.getAdminCards({ limit: 1000 });
-      console.log('API Response:', response); // Debug log
-      
-      setState(prev => ({ 
-        ...prev, 
-        cards: response.data?.cards || [], 
-        isLoading: false 
+      const response = await conversationCardsAPI.getAdminCards({ limit: 500 }, apiToken);
+
+      setState(prev => ({
+        ...prev,
+        cards: response.data?.cards || [],
+        isLoading: false
       }));
     } catch (error) {
-      console.error('Failed to load cards:', error); // Debug log
-      setState(prev => ({ 
-        ...prev, 
+      setState(prev => ({
+        ...prev,
         error: error instanceof Error ? error.message : 'Failed to load cards',
-        isLoading: false 
+        isLoading: false
       }));
     }
   };
 
-  // Authentication
-  const handleLogin = () => {
-    if (password === ADMIN_PASSWORD) {
-      localStorage.setItem(AUTH_STORAGE_KEY, 'true');
-      setState(prev => ({ ...prev, isAuthenticated: true }));
-      loadCards();
-    } else {
-      setState(prev => ({ ...prev, error: 'Invalid password' }));
+  // Authentication - token is verified server-side via admin endpoint
+  const handleLogin = async () => {
+    if (!password.trim()) {
+      setState(prev => ({ ...prev, error: 'Please enter an API token' }));
+      return;
+    }
+
+    setState(prev => ({ ...prev, isLoading: true, error: null }));
+    try {
+      // Verify token by calling the admin endpoint
+      const response = await conversationCardsAPI.getAdminCards({ limit: 1 }, password.trim());
+      localStorage.setItem(AUTH_TOKEN_KEY, password.trim());
+      setState(prev => ({ ...prev, isAuthenticated: true, isLoading: false }));
+      loadCards(password.trim());
+    } catch {
+      setState(prev => ({ ...prev, error: 'Invalid API token', isLoading: false }));
     }
   };
 
   // Logout
   const handleLogout = () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem(AUTH_TOKEN_KEY);
     setState(prev => ({ 
       ...prev, 
       isAuthenticated: false, 
@@ -168,7 +175,6 @@ export default function AdminPanel() {
 
   // Start editing
   const startEdit = (card: ConversationCard) => {
-    console.log('Editing card:', card); // Debug log
     setState(prev => ({ ...prev, editingCard: card }));
     setFormData({
       question: card.question,
@@ -210,16 +216,16 @@ export default function AdminPanel() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                API Token
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-                  placeholder="Enter admin password"
+                  placeholder="Enter admin API token"
                 />
                 <button
                   type="button"

@@ -20,16 +20,14 @@ app.use(cors({
     'https://games.burakintisah.com',
     'https://games-burakintisah.vercel.app',
     'https://games-burakintisah.netlify.app',
-    /\.vercel\.app$/,
-    /\.netlify\.app$/,
-    /\.firebase\.app$/,
-    /\.web\.app$/
+    /^https:\/\/games-123f7\.web\.app$/,
+    /^https:\/\/games-123f7\.firebaseapp\.com$/
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
 }));
-app.use(express.json());
+app.use(express.json({ limit: '100kb' }));
 
 // Request logging
 app.use((req, res, next) => {
