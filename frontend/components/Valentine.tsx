@@ -265,19 +265,9 @@ export function Valentine({ locale }: ValentineProps) {
                   <p className="text-rose-400 text-sm font-medium tracking-widest uppercase mb-4">
                     {t('valentine.envelope.to')}
                   </p>
-                  <input
-                    type="text"
-                    value={recipientName}
-                    onChange={(e) => setRecipientName(e.target.value)}
-                    placeholder={t('valentine.envelope.placeholder')}
-                    className="w-full text-center text-2xl md:text-3xl font-bold text-rose-700 bg-transparent border-b-2 border-dashed border-rose-300 focus:border-rose-500 outline-none pb-2 placeholder:text-rose-200 placeholder:font-normal placeholder:text-lg"
-                    autoFocus
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && recipientName.trim()) {
-                        setScreen('buildup');
-                      }
-                    }}
-                  />
+                  <p className="text-2xl md:text-3xl font-bold text-rose-700 border-b-2 border-dashed border-rose-300 pb-2">
+                    Ayşe Aydoğan
+                  </p>
                   <div className="mt-5 flex justify-center gap-1 text-xl">
                     {['💕', '💗', '💕'].map((h, i) => (
                       <motion.span
