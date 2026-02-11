@@ -24,7 +24,7 @@ function FloatingHeart({ delay, duration, left, size, emoji }: {
       style={{ left: `${left}%`, bottom: -40, fontSize: size }}
       initial={{ y: 0, opacity: 0, rotate: 0 }}
       animate={{
-        y: [0, -window.innerHeight - 100],
+        y: [0, -(typeof window !== 'undefined' ? window.innerHeight : 800) - 100],
         opacity: [0, 1, 1, 0],
         rotate: [0, Math.random() > 0.5 ? 25 : -25, 0],
         x: [0, (Math.random() - 0.5) * 80],
@@ -78,7 +78,7 @@ function KissEmoji({ delay, left }: { delay: number; left: number }) {
       style={{ left: `${left}%`, top: -40, fontSize: 20 + Math.random() * 16 }}
       initial={{ y: -40, opacity: 0, rotate: 0 }}
       animate={{
-        y: window.innerHeight + 40,
+        y: (typeof window !== 'undefined' ? window.innerHeight : 800) + 40,
         opacity: [0, 1, 1, 0.8, 0],
         rotate: (Math.random() - 0.5) * 60,
         x: (Math.random() - 0.5) * 60,
