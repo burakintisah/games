@@ -69,16 +69,14 @@ export function EmojiDecoder({ locale }: EmojiDecoderProps) {
       setAnswered(prev => new Set(prev).add(currentPuzzle.id));
     }
     setShowAnswer(true);
-    setTimeout(() => handleNext(), 1200);
-  }, [currentPuzzle, answered, handleNext]);
+  }, [currentPuzzle, answered]);
 
   const handleSkip = useCallback(() => {
     if (currentPuzzle) {
       setAnswered(prev => new Set(prev).add(currentPuzzle.id));
     }
     setShowAnswer(true);
-    setTimeout(() => handleNext(), 1200);
-  }, [currentPuzzle, handleNext]);
+  }, [currentPuzzle]);
 
   const handleCategoryChange = useCallback((categoryId: string) => {
     setSelectedCategory(categoryId);
@@ -256,6 +254,22 @@ export function EmojiDecoder({ locale }: EmojiDecoderProps) {
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              {/* Continue button after answer reveal */}
+              {showAnswer && (
+                <motion.button
+                  onClick={handleNext}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-3 rounded-2xl font-semibold shadow-md text-sm mb-2"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {t('emoji.continue')}
+                  <ChevronRight className="w-4 h-4" />
+                </motion.button>
+              )}
 
               {/* Action buttons */}
               {!showAnswer && !alreadyAnswered && (
