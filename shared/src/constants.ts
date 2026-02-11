@@ -21,6 +21,12 @@ export const GAME_MODES = [
     nameKey: 'gameModes.valentine',
     descKey: 'gameModes.valentineDesc',
     icon: '💝',
+  },
+  {
+    id: 'bluff-cards',
+    nameKey: 'gameModes.bluffCards',
+    descKey: 'gameModes.bluffCardsDesc',
+    icon: '🃏',
   }
 ] as const;
 

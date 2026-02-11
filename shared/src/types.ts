@@ -1,7 +1,7 @@
 // Core game types
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
 export type SupportedLanguage = 'en' | 'tr';
-export type GameMode = 'conversation-cards' | 'emoji-decoder' | 'valentine';
+export type GameMode = 'conversation-cards' | 'emoji-decoder' | 'valentine' | 'bluff-cards';
 
 export interface MultilingualText {
   en: string;
@@ -35,6 +35,16 @@ export interface EmojiPuzzle {
   emojis: string;
   answer: MultilingualText;
   hint: MultilingualText;
+  category: string;
+  difficulty: DifficultyLevel;
+}
+
+export interface BluffCard {
+  id: string;
+  statement: MultilingualText;
+  isTrue: boolean;
+  explanation: MultilingualText;
+  source?: MultilingualText;
   category: string;
   difficulty: DifficultyLevel;
 }

@@ -10,7 +10,9 @@
     "emojiDecoder": "Emoji Decoder",
     "emojiDecoderDesc": "Guess the word or phrase from emoji clues",
     "valentine": "Valentine",
-    "valentineDesc": "A very important question for someone special"
+    "valentineDesc": "A very important question for someone special",
+    "bluffCards": "Bluff Cards",
+    "bluffCardsDesc": "True or false? Test your knowledge with surprising facts"
   },
   "decks": {
     "relationships": {
@@ -95,6 +97,34 @@
     "sweetMessage": "You just made me the happiest person in the world",
     "sendKiss": "Send a Kiss",
     "forever": "Forever & Always"
+  },
+  "bluff": {
+    "title": "Bluff Cards",
+    "subtitle": "Is this statement true or false? Discuss and decide!",
+    "true": "True",
+    "false": "False",
+    "trueStatement": "This is TRUE!",
+    "falseStatement": "This is FALSE!",
+    "explanation": "Explanation",
+    "nextCard": "Next Card",
+    "prevCard": "Previous",
+    "score": "Score",
+    "cardOf": "of",
+    "allCategories": "All",
+    "playAgain": "Play Again",
+    "congratulations": "Game Over!",
+    "finalScore": "Final Score",
+    "correct": "Correct",
+    "wrong": "Wrong",
+    "streak": "Streak",
+    "bestStreak": "Best Streak",
+    "teamMode": "Team Mode",
+    "team1": "Team 1",
+    "team2": "Team 2",
+    "soloMode": "Solo",
+    "revealAnswer": "Reveal Answer",
+    "madeYourChoice": "Lock in your answer!",
+    "roundWinner": "Point goes to"
   },
   "errors": {
     "voteError": "Failed to submit vote. Please try again."
