@@ -25,6 +25,8 @@ const config: Config = {
         'gradient-childhood': 'linear-gradient(135deg, #009688 0%, #004d40 100%)',
         // Shuffle - Violet gradient (4.5:1+ contrast)
         'gradient-shuffle': 'linear-gradient(135deg, #673ab7 0%, #311b92 100%)',
+        // Valentine - Pink/Red romantic gradient
+        'gradient-valentine': 'linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #e91e63 100%)',
       },
       // Animation variants for stagger effects
       animation: {
