@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigation } from '../../../components/Navigation';
 import { DeckCard } from '../../../components/DeckCard';
 import { QuestionModal } from '../../../components/QuestionModal';
@@ -44,6 +44,11 @@ const itemVariants = {
 
 export default function GamePage({ params: { locale, game } }: { params: { locale: string; game: string } }) {
   const activeGameMode = game as GameMode;
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShuffleMode, setIsShuffleMode] = useState(false);
   const { t } = useClientTranslation(locale);
