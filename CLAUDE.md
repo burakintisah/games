@@ -156,6 +156,31 @@ No test framework is currently configured. The project has no test files or test
 - **Database:** Firestore with rules in `firestore.rules` (public read, authenticated write on `conversation-cards`)
 - **Firebase project:** `games-123f7`
 
+## Routing Architecture
+
+The app uses URL-based game routing: `app/[locale]/[game]/page.tsx`
+
+- **Route pattern:** `/[locale]/[game]` (e.g. `/tr/conversation-cards`, `/en/valentine`, `/tr/emoji-decoder`)
+- **Game modes** are defined in `shared/src/constants.ts` (`GAME_MODES` array). Each mode has an `id` that maps to the `[game]` URL segment.
+- **Static params** are generated in `app/[locale]/[game]/layout.tsx` from `GAME_MODES`.
+- **Locale layout** (`app/[locale]/layout.tsx`) is a thin wrapper — no `<html>` or `<body>` tags. Root layout (`app/layout.tsx`) owns the `<html>` and `<body>`. The `lang` attribute is set client-side via `useEffect` in the game page.
+
+### SSR / Static Export Gotchas
+
+Since the project uses `output: 'export'`, **every route is prerendered at build time**, including game-specific pages like `/tr/valentine`. This means:
+
+- **Never use `window`, `document`, or other browser-only APIs at render time** in any component that could be rendered during static export. Always guard with `typeof window !== 'undefined'` or move the access into `useEffect`.
+- The `"use client"` directive does NOT prevent server-side prerendering — it only marks the hydration boundary. Components still execute on the server during build.
+- If a new game mode component uses browser APIs, wrap them in `useEffect` or use a `typeof window` guard to avoid prerender crashes.
+
+### Adding a New Game Mode
+
+1. Add the mode to `GAME_MODES` in `shared/src/constants.ts`
+2. Create the game component in `frontend/components/`
+3. Add the rendering condition in `frontend/app/[locale]/[game]/page.tsx`
+4. Add translation keys in `frontend/public/locales/{en,tr}/common.json`
+5. Ensure no browser-only API usage at render time (SSR-safe)
+
 ## Key Files for Common Tasks
 
 | Task | Files |
