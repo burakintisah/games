@@ -90,6 +90,32 @@ function KissEmoji({ delay, left }: { delay: number; left: number }) {
   );
 }
 
+// Kiss burst - firework explosion of kiss emojis from center
+function KissBurstEmoji({ index }: { index: number }) {
+  const angle = (index / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+  const distance = 120 + Math.random() * 280;
+  const emojis = ['💋', '💋', '💋', '😘', '😘', '💕', '💗', '❤️', '✨'];
+  const emoji = emojis[index % emojis.length];
+
+  return (
+    <motion.div
+      className="absolute pointer-events-none select-none"
+      style={{ left: '50%', top: '45%', fontSize: 20 + Math.random() * 28 }}
+      initial={{ x: 0, y: 0, opacity: 1, scale: 0 }}
+      animate={{
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        opacity: [1, 1, 0],
+        scale: [0, 1.8, 0.5],
+        rotate: Math.random() * 720 - 360,
+      }}
+      transition={{ duration: 1 + Math.random() * 0.8, ease: "easeOut" }}
+    >
+      {emoji}
+    </motion.div>
+  );
+}
+
 const BEAR_STAGES = ['🧸', '🐻', '🥺', '😢', '😭'];
 
 export function Valentine({ locale }: ValentineProps) {
@@ -102,6 +128,9 @@ export function Valentine({ locale }: ValentineProps) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [kissRain, setKissRain] = useState(false);
   const [kissWaves, setKissWaves] = useState(0);
+  const [kissBurst, setKissBurst] = useState(false);
+  const [kissFlash, setKissFlash] = useState(false);
+  const [showMuah, setShowMuah] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Generate floating hearts based on screen and attempts
@@ -157,11 +186,19 @@ export function Valentine({ locale }: ValentineProps) {
     setTimeout(() => setShowConfetti(false), 3000);
   }, []);
 
-  // Handle kiss button
+  // Handle kiss button - epic sequence: flash → burst → muah → rain
   const handleKiss = useCallback(() => {
-    setKissRain(true);
+    setKissFlash(true);
+    setKissBurst(true);
+    setShowMuah(true);
     setKissWaves(prev => prev + 1);
-    setTimeout(() => setKissRain(false), 3000);
+    setTimeout(() => setKissFlash(false), 500);
+    setTimeout(() => {
+      setKissBurst(false);
+      setKissRain(true);
+    }, 800);
+    setTimeout(() => setShowMuah(false), 2000);
+    setTimeout(() => setKissRain(false), 4000);
   }, []);
 
   // Screen transition variants
@@ -462,11 +499,51 @@ export function Valentine({ locale }: ValentineProps) {
               </div>
             )}
 
+            {/* Pink flash overlay */}
+            <AnimatePresence>
+              {kissFlash && (
+                <motion.div
+                  className="absolute inset-0 pointer-events-none z-50"
+                  style={{ background: 'radial-gradient(circle, rgba(244,63,94,0.5) 0%, rgba(236,72,153,0.3) 50%, transparent 80%)' }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Kiss burst - firework explosion */}
+            {kissBurst && (
+              <div className="absolute inset-0 pointer-events-none z-40">
+                {Array.from({ length: 28 }, (_, i) => (
+                  <KissBurstEmoji key={`burst-${kissWaves}-${i}`} index={i} />
+                ))}
+              </div>
+            )}
+
+            {/* Big MUAH! text */}
+            <AnimatePresence>
+              {showMuah && (
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none z-50"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 2 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                >
+                  <span className="text-6xl md:text-8xl font-black text-rose-500 drop-shadow-lg" style={{ textShadow: '0 0 40px rgba(244,63,94,0.6), 0 0 80px rgba(244,63,94,0.3)' }}>
+                    MUAH! 💋
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Kiss rain */}
             {kissRain && (
               <div className="absolute inset-0 pointer-events-none">
-                {Array.from({ length: 25 }, (_, i) => (
-                  <KissEmoji key={`${kissWaves}-${i}`} delay={i * 0.1} left={Math.random() * 100} />
+                {Array.from({ length: 35 }, (_, i) => (
+                  <KissEmoji key={`${kissWaves}-${i}`} delay={i * 0.08} left={Math.random() * 100} />
                 ))}
               </div>
             )}
