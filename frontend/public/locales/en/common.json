@@ -8,7 +8,9 @@
     "conversationCards": "Conversation Cards",
     "conversationCardsDesc": "Deep, meaningful conversations with thought-provoking questions",
     "emojiDecoder": "Emoji Decoder",
-    "emojiDecoderDesc": "Guess the word or phrase from emoji clues"
+    "emojiDecoderDesc": "Guess the word or phrase from emoji clues",
+    "valentine": "Valentine",
+    "valentineDesc": "A very important question for someone special"
   },
   "decks": {
     "relationships": {
@@ -72,6 +74,18 @@
     "finalScore": "Your Score",
     "correct": "Correct",
     "skipped": "Skipped"
+  },
+  "valentine": {
+    "buildup": "I have a very important question for you...",
+    "continue": "Continue",
+    "question": "Will you be my Valentine?",
+    "yes": "Yes!",
+    "no": "No",
+    "noTexts": ["No", "Are you sure?", "Think again!", "Please???", "I'll cry...", "Pretty please?", "Don't do this!", "Impossible!"],
+    "celebration": "Yayyy! I knew you'd say yes!",
+    "sweetMessage": "You just made me the happiest person in the world",
+    "sendKiss": "Send a Kiss",
+    "forever": "Forever & Always"
   },
   "errors": {
     "voteError": "Failed to submit vote. Please try again."

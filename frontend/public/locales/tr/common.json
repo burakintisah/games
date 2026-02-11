@@ -8,7 +8,9 @@
     "conversationCards": "Sohbet Kartları",
     "conversationCardsDesc": "Düşündürücü sorularla derin ve anlamlı sohbetler",
     "emojiDecoder": "Emoji Bulmaca",
-    "emojiDecoderDesc": "Emoji ipuçlarından kelime veya cümleyi tahmin et"
+    "emojiDecoderDesc": "Emoji ipuçlarından kelime veya cümleyi tahmin et",
+    "valentine": "Sevgililer Günü",
+    "valentineDesc": "Özel biri için çok önemli bir soru"
   },
   "decks": {
     "relationships": {
@@ -72,6 +74,18 @@
     "finalScore": "Puanın",
     "correct": "Doğru",
     "skipped": "Geçilen"
+  },
+  "valentine": {
+    "buildup": "Sana çok önemli bir sorum var...",
+    "continue": "Devam Et",
+    "question": "Sevgilim Olur Musun?",
+    "yes": "Evet!",
+    "no": "Hayır",
+    "noTexts": ["Hayır", "Emin misin?", "Tekrar düşün!", "Lütfen???", "Ağlayacağım...", "Rica ederim?", "Bunu yapma!", "İmkansız!"],
+    "celebration": "Yayyy! Evet diyeceğini biliyordum!",
+    "sweetMessage": "Beni dünyanın en mutlu insanı yaptın",
+    "sendKiss": "Öpücük Gönder",
+    "forever": "Sonsuza Kadar"
   },
   "errors": {
     "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin."

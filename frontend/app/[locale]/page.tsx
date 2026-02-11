@@ -7,6 +7,7 @@ import { QuestionModal } from '../../components/QuestionModal';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { EmojiDecoder } from '../../components/EmojiDecoder';
+import { Valentine } from '../../components/Valentine';
 import { CONVERSATION_DECKS } from '../../../shared/src';
 import type { GameMode, SupportedLanguage } from '../../../shared/src';
 import { useConversationCards } from '../../hooks/useConversationCards';
@@ -243,6 +244,10 @@ export default function Page({ params: { locale } }: { params: { locale: string 
 
       {activeGameMode === 'emoji-decoder' && (
         <EmojiDecoder locale={locale} />
+      )}
+
+      {activeGameMode === 'valentine' && (
+        <Valentine locale={locale} />
       )}
     </div>
   );

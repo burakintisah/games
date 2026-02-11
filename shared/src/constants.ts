@@ -15,6 +15,12 @@ export const GAME_MODES = [
     nameKey: 'gameModes.emojiDecoder',
     descKey: 'gameModes.emojiDecoderDesc',
     icon: '🧩',
+  },
+  {
+    id: 'valentine',
+    nameKey: 'gameModes.valentine',
+    descKey: 'gameModes.valentineDesc',
+    icon: '💝',
   }
 ] as const;
 

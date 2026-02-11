@@ -1,7 +1,7 @@
 // Core game types
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
 export type SupportedLanguage = 'en' | 'tr';
-export type GameMode = 'conversation-cards' | 'emoji-decoder';
+export type GameMode = 'conversation-cards' | 'emoji-decoder' | 'valentine';
 
 export interface MultilingualText {
   en: string;
