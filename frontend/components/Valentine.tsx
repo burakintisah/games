@@ -122,7 +122,7 @@ export function Valentine({ locale }: ValentineProps) {
   const { t } = useClientTranslation(locale);
 
   const [screen, setScreen] = useState<Screen>('envelope');
-  const [recipientName, setRecipientName] = useState('');
+  const [recipientName, setRecipientName] = useState('Ayşem');
   const [noAttempts, setNoAttempts] = useState(0);
   const [noPosition, setNoPosition] = useState<{ x: number; y: number } | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
