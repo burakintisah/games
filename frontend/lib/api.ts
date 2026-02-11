@@ -210,9 +210,9 @@ export class ConversationCardsAPI {
     difficulty?: 'easy' | 'medium' | 'hard';
     limit?: number;
     offset?: number;
-  } = {}): Promise<ApiResponse<CardsListData>> {
+  } = {}, token?: string): Promise<ApiResponse<CardsListData>> {
     const searchParams = new URLSearchParams();
-    
+
     if (params.category) searchParams.append('category', params.category);
     if (params.difficulty) searchParams.append('difficulty', params.difficulty);
     if (params.limit) searchParams.append('limit', params.limit.toString());
@@ -220,8 +220,10 @@ export class ConversationCardsAPI {
 
     const query = searchParams.toString();
     const endpoint = `/v1/conversation-cards/admin${query ? `?${query}` : ''}`;
-    
-    return this.request<CardsListData>(endpoint);
+
+    return this.request<CardsListData>(endpoint, token ? {
+      headers: { 'Authorization': `Bearer ${token}` }
+    } : {});
   }
 }
 

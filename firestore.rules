@@ -7,13 +7,9 @@ service cloud.firestore {
       // Allow read access to all users (public read)
       allow read: if true;
       
-      // Allow write access only to authenticated users or admin functions
-      // In production, you might want to restrict this further
+      // Allow write access only to authenticated users
+      // Firebase Admin SDK (used by Cloud Functions) bypasses these rules
       allow write: if request.auth != null;
-      
-      // Allow create/update/delete for Firebase Functions (server-side)
-      // Functions run with admin privileges, so this allows API operations
-      allow create, update, delete: if true;
     }
     
     // Default rule: deny all other access

@@ -127,6 +127,8 @@
     "roundWinner": "Puan gidiyor"
   },
   "errors": {
-    "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin."
+    "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin.",
+    "somethingWentWrong": "Bir sorun oluştu",
+    "tryAgain": "Tekrar Dene"
   }
 }

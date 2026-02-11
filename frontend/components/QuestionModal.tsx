@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
 import type { ConversationCard } from '../../shared/src';
@@ -100,11 +100,50 @@ export function QuestionModal({
   const { t } = useClientTranslation(locale);
   const [hasVoted, setHasVoted] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setHasVoted(false);
     setVoteError(null);
   }, [question?.id]);
+
+  // Close on Escape key and trap focus
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+
+      // Focus trap
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    // Prevent body scroll while modal is open
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -136,6 +175,9 @@ export function QuestionModal({
     <AnimatePresence>
       <motion.div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+        role="dialog"
+        aria-modal="true"
+        aria-label={question ? t(`decks.${getDeckTranslationKey(question.category)}.name`) : 'Question'}
         variants={overlayVariants}
         initial="hidden"
         animate="visible"
@@ -143,6 +185,7 @@ export function QuestionModal({
         onClick={onClose}
       >
         <motion.div
+          ref={modalRef}
           className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
           variants={cardVariants}
           initial="hidden"
@@ -174,6 +217,7 @@ export function QuestionModal({
             </div>
             <button
               onClick={onClose}
+              aria-label={t('ui.close')}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               <X className="w-5 h-5 text-gray-500" />
@@ -191,6 +235,8 @@ export function QuestionModal({
               <ErrorMessage
                 message={error}
                 onRetry={onRetry}
+                title={t('errors.somethingWentWrong')}
+                retryLabel={t('errors.tryAgain')}
               />
             ) : question ? (
               <div className="text-center">

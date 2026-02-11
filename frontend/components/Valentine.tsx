@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 
@@ -132,6 +132,14 @@ export function Valentine({ locale }: ValentineProps) {
   const [kissFlash, setKissFlash] = useState(false);
   const [showMuah, setShowMuah] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => {
+      timersRef.current.forEach(clearTimeout);
+    };
+  }, []);
 
   // Generate floating hearts based on screen and attempts
   const heartCount = screen === 'envelope' ? 8 : screen === 'buildup' ? 12 : screen === 'question' ? 12 + noAttempts * 3 : 20;
@@ -179,27 +187,36 @@ export function Valentine({ locale }: ValentineProps) {
     setNoAttempts(prev => prev + 1);
   }, []);
 
+  // Safe setTimeout that auto-cleans on unmount
+  const safeTimeout = useCallback((fn: () => void, delay: number) => {
+    const id = setTimeout(() => {
+      timersRef.current = timersRef.current.filter(t => t !== id);
+      fn();
+    }, delay);
+    timersRef.current.push(id);
+  }, []);
+
   // Handle "Yes" click
   const handleYes = useCallback(() => {
     setScreen('celebration');
     setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 3000);
-  }, []);
+    safeTimeout(() => setShowConfetti(false), 3000);
+  }, [safeTimeout]);
 
-  // Handle kiss button - epic sequence: flash → burst → muah → rain
+  // Handle kiss button - epic sequence: flash -> burst -> muah -> rain
   const handleKiss = useCallback(() => {
     setKissFlash(true);
     setKissBurst(true);
     setShowMuah(true);
     setKissWaves(prev => prev + 1);
-    setTimeout(() => setKissFlash(false), 500);
-    setTimeout(() => {
+    safeTimeout(() => setKissFlash(false), 500);
+    safeTimeout(() => {
       setKissBurst(false);
       setKissRain(true);
     }, 800);
-    setTimeout(() => setShowMuah(false), 2000);
-    setTimeout(() => setKissRain(false), 4000);
-  }, []);
+    safeTimeout(() => setShowMuah(false), 2000);
+    safeTimeout(() => setKissRain(false), 4000);
+  }, [safeTimeout]);
 
   // Screen transition variants
   const screenVariants = {
