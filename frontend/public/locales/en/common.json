@@ -76,12 +76,20 @@
     "skipped": "Skipped"
   },
   "valentine": {
+    "envelope": {
+      "to": "To",
+      "placeholder": "Enter their name",
+      "open": "Open"
+    },
+    "dear": "Dear {{name}},",
     "buildup": "I have a very important question for you...",
     "continue": "Continue",
     "question": "Will you be my Valentine?",
     "yes": "Yes!",
     "no": "No",
     "noTexts": ["No", "Are you sure?", "Think again!", "Please???", "I'll cry...", "Pretty please?", "Don't do this!", "Impossible!"],
+    "attemptMessage": "Attempt {{count}}... the bear is getting sad",
+    "justClickYes": "Just click Yes already! 😭",
     "celebration": "Yayyy! I knew you'd say yes!",
     "sweetMessage": "You just made me the happiest person in the world",
     "sendKiss": "Send a Kiss",

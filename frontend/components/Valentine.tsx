@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useClientTranslation } from '../hooks/useClientTranslation';
 
@@ -8,7 +8,7 @@ interface ValentineProps {
   locale: string;
 }
 
-type Screen = 'buildup' | 'question' | 'celebration';
+type Screen = 'envelope' | 'buildup' | 'question' | 'celebration';
 
 // Floating heart component for background ambiance
 function FloatingHeart({ delay, duration, left, size, emoji }: {
@@ -90,23 +90,51 @@ function KissEmoji({ delay, left }: { delay: number; left: number }) {
   );
 }
 
-const NO_TEXTS_EN = ["No", "Are you sure?", "Think again!", "Please???", "I'll cry...", "Pretty please?", "Don't do this!", "Impossible!"];
+// Kiss burst - firework explosion of kiss emojis from center
+function KissBurstEmoji({ index }: { index: number }) {
+  const angle = (index / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+  const distance = 120 + Math.random() * 280;
+  const emojis = ['💋', '💋', '💋', '😘', '😘', '💕', '💗', '❤️', '✨'];
+  const emoji = emojis[index % emojis.length];
+
+  return (
+    <motion.div
+      className="absolute pointer-events-none select-none"
+      style={{ left: '50%', top: '45%', fontSize: 20 + Math.random() * 28 }}
+      initial={{ x: 0, y: 0, opacity: 1, scale: 0 }}
+      animate={{
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        opacity: [1, 1, 0],
+        scale: [0, 1.8, 0.5],
+        rotate: Math.random() * 720 - 360,
+      }}
+      transition={{ duration: 1 + Math.random() * 0.8, ease: "easeOut" }}
+    >
+      {emoji}
+    </motion.div>
+  );
+}
 
 const BEAR_STAGES = ['🧸', '🐻', '🥺', '😢', '😭'];
 
 export function Valentine({ locale }: ValentineProps) {
   const { t } = useClientTranslation(locale);
 
-  const [screen, setScreen] = useState<Screen>('buildup');
+  const [screen, setScreen] = useState<Screen>('envelope');
+  const [recipientName, setRecipientName] = useState('');
   const [noAttempts, setNoAttempts] = useState(0);
   const [noPosition, setNoPosition] = useState<{ x: number; y: number } | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [kissRain, setKissRain] = useState(false);
   const [kissWaves, setKissWaves] = useState(0);
+  const [kissBurst, setKissBurst] = useState(false);
+  const [kissFlash, setKissFlash] = useState(false);
+  const [showMuah, setShowMuah] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Generate floating hearts based on screen and attempts
-  const heartCount = screen === 'buildup' ? 12 : screen === 'question' ? 12 + noAttempts * 3 : 20;
+  const heartCount = screen === 'envelope' ? 8 : screen === 'buildup' ? 12 : screen === 'question' ? 12 + noAttempts * 3 : 20;
   const heartEmojis = ['❤️', '💕', '💖', '💗', '🩷', '🌹', '💘'];
 
   const floatingHearts = Array.from({ length: Math.min(heartCount, 35) }, (_, i) => ({
@@ -120,7 +148,6 @@ export function Valentine({ locale }: ValentineProps) {
 
   // Get the "No" button text based on attempts
   const getNoText = useCallback(() => {
-    const texts = NO_TEXTS_EN;
     try {
       const translated = t('valentine.noTexts', { returnObjects: true });
       if (Array.isArray(translated) && translated.length > 0) {
@@ -129,7 +156,7 @@ export function Valentine({ locale }: ValentineProps) {
     } catch {
       // fallback
     }
-    return texts[Math.min(noAttempts, texts.length - 1)];
+    return "No";
   }, [noAttempts, t]);
 
   // Bear emoji based on attempts
@@ -159,11 +186,19 @@ export function Valentine({ locale }: ValentineProps) {
     setTimeout(() => setShowConfetti(false), 3000);
   }, []);
 
-  // Handle kiss button
+  // Handle kiss button - epic sequence: flash → burst → muah → rain
   const handleKiss = useCallback(() => {
-    setKissRain(true);
+    setKissFlash(true);
+    setKissBurst(true);
+    setShowMuah(true);
     setKissWaves(prev => prev + 1);
-    setTimeout(() => setKissRain(false), 3000);
+    setTimeout(() => setKissFlash(false), 500);
+    setTimeout(() => {
+      setKissBurst(false);
+      setKissRain(true);
+    }, 800);
+    setTimeout(() => setShowMuah(false), 2000);
+    setTimeout(() => setKissRain(false), 4000);
   }, []);
 
   // Screen transition variants
@@ -187,6 +222,96 @@ export function Valentine({ locale }: ValentineProps) {
 
       {/* Main content */}
       <AnimatePresence mode="wait">
+        {/* ===== SCREEN 0: ENVELOPE ===== */}
+        {screen === 'envelope' && (
+          <motion.div
+            key="envelope"
+            variants={screenVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+            className="absolute inset-0 flex flex-col items-center justify-center px-6"
+          >
+            <motion.div
+              className="relative w-80 md:w-96"
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              {/* Envelope */}
+              <div className="relative bg-[#fff1f2] rounded-2xl shadow-2xl overflow-hidden border border-rose-200">
+                {/* Envelope flap */}
+                <div className="relative h-28">
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 112" preserveAspectRatio="none">
+                    <path d="M0,0 L200,90 L400,0 L400,112 L0,112Z" fill="#fff1f2" />
+                    <path d="M0,0 L200,90 L400,0" fill="none" stroke="#fda4af" strokeWidth="2" />
+                  </svg>
+                  {/* Heart seal */}
+                  <motion.div
+                    className="absolute z-10 flex items-center justify-center"
+                    style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div className="w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center shadow-lg shadow-rose-300/50">
+                      <span className="text-white text-xl">💌</span>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Letter content */}
+                <div className="px-8 pb-8 pt-2 text-center">
+                  <p className="text-rose-400 text-sm font-medium tracking-widest uppercase mb-4">
+                    {t('valentine.envelope.to')}
+                  </p>
+                  <input
+                    type="text"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    placeholder={t('valentine.envelope.placeholder')}
+                    className="w-full text-center text-2xl md:text-3xl font-bold text-rose-700 bg-transparent border-b-2 border-dashed border-rose-300 focus:border-rose-500 outline-none pb-2 placeholder:text-rose-200 placeholder:font-normal placeholder:text-lg"
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && recipientName.trim()) {
+                        setScreen('buildup');
+                      }
+                    }}
+                  />
+                  <div className="mt-5 flex justify-center gap-1 text-xl">
+                    {['💕', '💗', '💕'].map((h, i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity }}
+                      >
+                        {h}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Open button */}
+            <motion.button
+              className={`mt-8 px-10 py-4 text-xl font-bold rounded-full shadow-lg transition-colors ${
+                recipientName.trim()
+                  ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-rose-300/50'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+              whileHover={recipientName.trim() ? { scale: 1.08, boxShadow: "0 20px 40px rgba(244, 63, 94, 0.4)" } : {}}
+              whileTap={recipientName.trim() ? { scale: 0.95 } : {}}
+              onClick={() => recipientName.trim() && setScreen('buildup')}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              💌 {t('valentine.envelope.open')}
+            </motion.button>
+          </motion.div>
+        )}
+
         {/* ===== SCREEN 1: BUILD-UP ===== */}
         {screen === 'buildup' && (
           <motion.div
@@ -217,6 +342,18 @@ export function Valentine({ locale }: ValentineProps) {
             >
               💝
             </motion.div>
+
+            {/* Dear Name */}
+            {recipientName && (
+              <motion.p
+                className="text-xl md:text-2xl text-rose-500 font-medium mb-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                {t('valentine.dear', { name: recipientName })}
+              </motion.p>
+            )}
 
             <motion.h1
               className="text-2xl md:text-4xl font-bold text-rose-700 text-center mb-12 max-w-lg leading-relaxed"
@@ -276,6 +413,11 @@ export function Valentine({ locale }: ValentineProps) {
               } : {}}
               transition={{ duration: 1, repeat: Infinity }}
             >
+              {recipientName && (
+                <span className="block text-xl md:text-2xl font-medium text-rose-500 mb-2">
+                  {recipientName},
+                </span>
+              )}
               {t('valentine.question')}
             </motion.h1>
 
@@ -286,7 +428,9 @@ export function Valentine({ locale }: ValentineProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                {noAttempts >= 5 ? "Just click Yes already! 😭" : `Attempt ${noAttempts}... the bear is getting sad`}
+                {noAttempts >= 5
+                  ? t('valentine.justClickYes')
+                  : t('valentine.attemptMessage', { count: noAttempts })}
               </motion.p>
             )}
 
@@ -355,25 +499,77 @@ export function Valentine({ locale }: ValentineProps) {
               </div>
             )}
 
-            {/* Kiss rain */}
-            {kissRain && (
-              <div className="absolute inset-0 pointer-events-none">
-                {Array.from({ length: 25 }, (_, i) => (
-                  <KissEmoji key={`${kissWaves}-${i}`} delay={i * 0.1} left={Math.random() * 100} />
+            {/* Pink flash overlay */}
+            <AnimatePresence>
+              {kissFlash && (
+                <motion.div
+                  className="absolute inset-0 pointer-events-none z-50"
+                  style={{ background: 'radial-gradient(circle, rgba(244,63,94,0.5) 0%, rgba(236,72,153,0.3) 50%, transparent 80%)' }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Kiss burst - firework explosion */}
+            {kissBurst && (
+              <div className="absolute inset-0 pointer-events-none z-40">
+                {Array.from({ length: 28 }, (_, i) => (
+                  <KissBurstEmoji key={`burst-${kissWaves}-${i}`} index={i} />
                 ))}
               </div>
             )}
 
-            {/* Big celebration emoji */}
-            <motion.div
-              className="text-7xl md:text-9xl mb-4"
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 10, -10, 0],
-              }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              💑
+            {/* Big MUAH! text */}
+            <AnimatePresence>
+              {showMuah && (
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none z-50"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 2 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                >
+                  <span className="text-6xl md:text-8xl font-black text-rose-500 drop-shadow-lg" style={{ textShadow: '0 0 40px rgba(244,63,94,0.6), 0 0 80px rgba(244,63,94,0.3)' }}>
+                    MUAH! 💋
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Kiss rain */}
+            {kissRain && (
+              <div className="absolute inset-0 pointer-events-none">
+                {Array.from({ length: 35 }, (_, i) => (
+                  <KissEmoji key={`${kissWaves}-${i}`} delay={i * 0.08} left={Math.random() * 100} />
+                ))}
+              </div>
+            )}
+
+            {/* Happy bear with heart */}
+            <motion.div className="relative mb-4">
+              <motion.div
+                className="text-7xl md:text-9xl"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, -5, 0],
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                🧸
+              </motion.div>
+              <motion.div
+                className="absolute -top-2 -right-2 md:-top-4 md:-right-4 text-3xl md:text-5xl"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  y: [0, -8, 0],
+                }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                ❤️
+              </motion.div>
             </motion.div>
 
             {/* Hearts row */}
@@ -418,6 +614,9 @@ export function Valentine({ locale }: ValentineProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
+              {recipientName && (
+                <span className="font-bold">{recipientName}, </span>
+              )}
               {t('valentine.sweetMessage')} 🥰
             </motion.p>
 

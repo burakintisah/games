@@ -76,12 +76,20 @@
     "skipped": "Geçilen"
   },
   "valentine": {
+    "envelope": {
+      "to": "Kime",
+      "placeholder": "İsmini yaz",
+      "open": "Aç"
+    },
+    "dear": "Sevgili {{name}},",
     "buildup": "Sana çok önemli bir sorum var...",
     "continue": "Devam Et",
     "question": "Sevgilim Olur Musun?",
     "yes": "Evet!",
     "no": "Hayır",
     "noTexts": ["Hayır", "Emin misin?", "Tekrar düşün!", "Lütfen???", "Ağlayacağım...", "Rica ederim?", "Bunu yapma!", "İmkansız!"],
+    "attemptMessage": "{{count}}. deneme... ayıcık üzülüyor",
+    "justClickYes": "Artık Evet'e bas! 😭",
     "celebration": "Yayyy! Evet diyeceğini biliyordum!",
     "sweetMessage": "Beni dünyanın en mutlu insanı yaptın",
     "sendKiss": "Öpücük Gönder",
