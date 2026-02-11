@@ -27,6 +27,8 @@ const config: Config = {
         'gradient-shuffle': 'linear-gradient(135deg, #673ab7 0%, #311b92 100%)',
         // Valentine - Pink/Red romantic gradient
         'gradient-valentine': 'linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #e91e63 100%)',
+        // Bluff Cards - Amber/Red dramatic gradient
+        'gradient-bluff': 'linear-gradient(135deg, #ef6c00 0%, #d32f2f 100%)',
       },
       // Animation variants for stagger effects
       animation: {

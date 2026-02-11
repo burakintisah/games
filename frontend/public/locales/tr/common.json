@@ -10,7 +10,9 @@
     "emojiDecoder": "Emoji Bulmaca",
     "emojiDecoderDesc": "Emoji ipuçlarından kelime veya cümleyi tahmin et",
     "valentine": "Sevgililer Günü",
-    "valentineDesc": "Özel biri için çok önemli bir soru"
+    "valentineDesc": "Özel biri için çok önemli bir soru",
+    "bluffCards": "Blöf Kartları",
+    "bluffCardsDesc": "Doğru mu yanlış mı? Şaşırtıcı bilgilerle bilgini test et"
   },
   "decks": {
     "relationships": {
@@ -95,6 +97,34 @@
     "sweetMessage": "Beni dünyanın en mutlu insanı yaptın",
     "sendKiss": "Öpücük Gönder",
     "forever": "Sonsuza Kadar"
+  },
+  "bluff": {
+    "title": "Blöf Kartları",
+    "subtitle": "Bu bilgi doğru mu yanlış mı? Tartışın ve karar verin!",
+    "true": "Doğru",
+    "false": "Yanlış",
+    "trueStatement": "Bu DOĞRU!",
+    "falseStatement": "Bu YANLIŞ!",
+    "explanation": "Açıklama",
+    "nextCard": "Sonraki Kart",
+    "prevCard": "Önceki",
+    "score": "Puan",
+    "cardOf": "/",
+    "allCategories": "Hepsi",
+    "playAgain": "Tekrar Oyna",
+    "congratulations": "Oyun Bitti!",
+    "finalScore": "Son Puan",
+    "correct": "Doğru",
+    "wrong": "Yanlış",
+    "streak": "Seri",
+    "bestStreak": "En İyi Seri",
+    "teamMode": "Takım Modu",
+    "team1": "Takım 1",
+    "team2": "Takım 2",
+    "soloMode": "Tek Kişi",
+    "revealAnswer": "Cevabı Göster",
+    "madeYourChoice": "Cevabınızı kilitleyin!",
+    "roundWinner": "Puan gidiyor"
   },
   "errors": {
     "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin."
