@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Gamepad2, Globe, ChevronDown, Shuffle } from 'lucide-react';
 import { SUPPORTED_LANGUAGES, GAME_MODES } from '../../shared/src';
@@ -11,10 +12,10 @@ interface NavigationProps {
   onShuffleMode?: () => void;
   locale: string;
   activeGameMode: GameMode;
-  onGameModeChange: (mode: GameMode) => void;
 }
 
-export function Navigation({ onShuffleMode, locale, activeGameMode, onGameModeChange }: NavigationProps) {
+export function Navigation({ onShuffleMode, locale, activeGameMode }: NavigationProps) {
+  const router = useRouter();
   const { t } = useClientTranslation(locale);
   const [selectedLanguage, setSelectedLanguage] = useState<typeof SUPPORTED_LANGUAGES[number]>(SUPPORTED_LANGUAGES[0]);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
@@ -36,7 +37,7 @@ export function Navigation({ onShuffleMode, locale, activeGameMode, onGameModeCh
 
   const handleGameModeChange = (mode: typeof GAME_MODES[number]) => {
     setIsGameModeOpen(false);
-    onGameModeChange(mode.id as GameMode);
+    router.push(`/${locale}/${mode.id}`);
   };
 
   useEffect(() => {
