@@ -73,7 +73,8 @@
     "congratulations": "Well Done!",
     "finalScore": "Your Score",
     "correct": "Correct",
-    "skipped": "Skipped"
+    "skipped": "Skipped",
+    "continue": "Continue"
   },
   "valentine": {
     "envelope": {
