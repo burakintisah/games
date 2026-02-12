@@ -144,7 +144,11 @@
     "congratulations": "Oyun Bitti!",
     "finalScore": "Son Puan",
     "wordsGuessed": "Bilinen",
-    "wordsSkipped": "Geçilen"
+    "wordsSkipped": "Geçilen",
+    "timerStart": "Zamanlayıcıyı Başlat",
+    "timerStop": "Zamanlayıcıyı Durdur",
+    "timerReset": "Sıfırla",
+    "timesUp": "Süre Doldu!"
   },
   "errors": {
     "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin.",
