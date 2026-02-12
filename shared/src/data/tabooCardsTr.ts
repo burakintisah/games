@@ -135,7 +135,7 @@ export const TABOO_CARDS_TR: TabooCard[] = [
   {
     id: 'tr_gu_h1',
     word: 'Ertelemek',
-    tabooWords: ['sonra', 'geciktirmek', 'tembel', 'откладmak', 'yapmamak'],
+    tabooWords: ['sonra', 'geciktirmek', 'tembel', 'aksatmak', 'yapmamak'],
     category: 'gunluk',
     difficulty: 'hard',
   },
