@@ -486,22 +486,22 @@ export function Taboo({ locale }: TabooProps) {
               </div>
 
               {/* Action buttons */}
-              <div className="px-6 pb-5 flex gap-3">
+              <div className="px-5 pb-5 flex gap-3">
                 <motion.button
                   onClick={handleSkip}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl font-semibold text-sm bg-orange-50 text-orange-600 hover:bg-orange-100 transition-all"
+                  className="flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-bold text-base bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 transition-all"
                   whileTap={{ scale: 0.95 }}
                 >
-                  <SkipForward className="w-4 h-4" />
+                  <SkipForward className="w-5 h-5" />
                   {t('taboo.skip')}
                 </motion.button>
                 <motion.button
                   onClick={handleGotIt}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl font-semibold text-sm bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md"
+                  className="flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-bold text-base bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Check className="w-4 h-4" />
+                  <Check className="w-5 h-5" />
                   {t('taboo.gotIt')}
                 </motion.button>
               </div>
@@ -514,29 +514,29 @@ export function Taboo({ locale }: TabooProps) {
           <motion.button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className={`flex items-center gap-1 px-4 py-2 rounded-xl font-medium text-sm transition-all ${
+            className={`flex items-center gap-1.5 px-5 py-3 rounded-2xl font-semibold text-base transition-all ${
               currentIndex === 0
                 ? 'text-gray-300 cursor-not-allowed'
-                : 'text-gray-600 hover:bg-white hover:shadow-sm'
+                : 'text-gray-600 bg-white/60 hover:bg-white hover:shadow-sm'
             }`}
             whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
             {t('taboo.prevCard')}
           </motion.button>
 
           <motion.button
             onClick={handleNext}
             disabled={currentIndex >= totalCards - 1}
-            className={`flex items-center gap-1 px-4 py-2 rounded-xl font-medium text-sm transition-all ${
+            className={`flex items-center gap-1.5 px-5 py-3 rounded-2xl font-semibold text-base transition-all ${
               currentIndex >= totalCards - 1
                 ? 'text-gray-300 cursor-not-allowed'
-                : 'text-purple-600 hover:bg-white hover:shadow-sm'
+                : 'text-purple-600 bg-white/60 hover:bg-white hover:shadow-sm'
             }`}
             whileTap={currentIndex < totalCards - 1 ? { scale: 0.95 } : {}}
           >
             {t('taboo.nextWord')}
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </motion.button>
         </div>
       </div>
