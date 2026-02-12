@@ -175,7 +175,7 @@ export function Navigation({ onShuffleMode, locale, activeGameMode }: Navigation
                   className="absolute top-full mt-2 right-0 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 min-w-48 md:min-w-64 animate-in fade-in-0 zoom-in-95 duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {GAME_MODES.map((mode) => (
+                  {GAME_MODES.filter(mode => (mode.locales as readonly string[]).includes(locale)).map((mode) => (
                     <button
                       key={mode.id}
                       onClick={() => handleGameModeChange(mode)}

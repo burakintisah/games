@@ -12,7 +12,9 @@
     "valentine": "Sevgililer Günü",
     "valentineDesc": "Özel biri için çok önemli bir soru",
     "bluffCards": "Blöf Kartları",
-    "bluffCardsDesc": "Doğru mu yanlış mı? Şaşırtıcı bilgilerle bilgini test et"
+    "bluffCardsDesc": "Doğru mu yanlış mı? Şaşırtıcı bilgilerle bilgini test et",
+    "taboo": "Taboo",
+    "tabooDesc": "Yasaklı kelimeleri kullanmadan kelimeyi anlat!"
   },
   "decks": {
     "relationships": {
@@ -125,6 +127,24 @@
     "revealAnswer": "Cevabı Göster",
     "madeYourChoice": "Cevabınızı kilitleyin!",
     "roundWinner": "Puan gidiyor"
+  },
+  "taboo": {
+    "title": "Taboo",
+    "subtitle": "Yasaklı kelimeleri kullanmadan kelimeyi anlat!",
+    "tabooWords": "Yasaklı Kelimeler",
+    "gotIt": "Bildi!",
+    "skip": "Geç",
+    "nextWord": "Sonraki Kelime",
+    "prevCard": "Önceki",
+    "score": "Puan",
+    "cardOf": "/",
+    "allCategories": "Hepsi",
+    "allDifficulties": "Tüm Seviyeler",
+    "playAgain": "Tekrar Oyna",
+    "congratulations": "Oyun Bitti!",
+    "finalScore": "Son Puan",
+    "wordsGuessed": "Bilinen",
+    "wordsSkipped": "Geçilen"
   },
   "errors": {
     "voteError": "Oy gönderilemedi. Lütfen tekrar deneyin.",

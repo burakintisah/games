@@ -12,7 +12,9 @@
     "valentine": "Valentine",
     "valentineDesc": "A very important question for someone special",
     "bluffCards": "Bluff Cards",
-    "bluffCardsDesc": "True or false? Test your knowledge with surprising facts"
+    "bluffCardsDesc": "True or false? Test your knowledge with surprising facts",
+    "taboo": "Taboo",
+    "tabooDesc": "Describe the word without saying the forbidden words!"
   },
   "decks": {
     "relationships": {
@@ -125,6 +127,24 @@
     "revealAnswer": "Reveal Answer",
     "madeYourChoice": "Lock in your answer!",
     "roundWinner": "Point goes to"
+  },
+  "taboo": {
+    "title": "Taboo",
+    "subtitle": "Describe the word without using these forbidden words!",
+    "tabooWords": "Forbidden Words",
+    "gotIt": "Got It!",
+    "skip": "Skip",
+    "nextWord": "Next Word",
+    "prevCard": "Previous",
+    "score": "Score",
+    "cardOf": "of",
+    "allCategories": "All",
+    "allDifficulties": "All Levels",
+    "playAgain": "Play Again",
+    "congratulations": "Game Over!",
+    "finalScore": "Final Score",
+    "wordsGuessed": "Guessed",
+    "wordsSkipped": "Skipped"
   },
   "errors": {
     "voteError": "Failed to submit vote. Please try again.",
