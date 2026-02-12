@@ -9,6 +9,7 @@ import { ErrorMessage } from '../../../components/ErrorMessage';
 import { EmojiDecoder } from '../../../components/EmojiDecoder';
 import { Valentine } from '../../../components/Valentine';
 import { BluffCards } from '../../../components/BluffCards';
+import { Taboo } from '../../../components/Taboo';
 import { CONVERSATION_DECKS } from '../../../../shared/src';
 import type { GameMode, SupportedLanguage } from '../../../../shared/src';
 import { useConversationCards } from '../../../hooks/useConversationCards';
@@ -262,6 +263,10 @@ export default function GamePage({ params: { locale, game } }: { params: { local
 
       {activeGameMode === 'bluff-cards' && (
         <BluffCards locale={locale} />
+      )}
+
+      {activeGameMode === 'taboo' && (
+        <Taboo locale={locale} />
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 // Core game types
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
 export type SupportedLanguage = 'en' | 'tr';
-export type GameMode = 'conversation-cards' | 'emoji-decoder' | 'valentine' | 'bluff-cards';
+export type GameMode = 'conversation-cards' | 'emoji-decoder' | 'valentine' | 'bluff-cards' | 'taboo';
 
 export interface MultilingualText {
   en: string;
@@ -45,6 +45,14 @@ export interface BluffCard {
   isTrue: boolean;
   explanation: MultilingualText;
   source?: MultilingualText;
+  category: string;
+  difficulty: DifficultyLevel;
+}
+
+export interface TabooCard {
+  id: string;
+  word: string;
+  tabooWords: string[];
   category: string;
   difficulty: DifficultyLevel;
 }
