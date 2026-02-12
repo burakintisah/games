@@ -144,7 +144,11 @@
     "congratulations": "Game Over!",
     "finalScore": "Final Score",
     "wordsGuessed": "Guessed",
-    "wordsSkipped": "Skipped"
+    "wordsSkipped": "Skipped",
+    "timerStart": "Start Timer",
+    "timerStop": "Stop Timer",
+    "timerReset": "Reset Timer",
+    "timesUp": "Time's Up!"
   },
   "errors": {
     "voteError": "Failed to submit vote. Please try again.",

@@ -9,3 +9,4 @@ export * from './data/questions';
 export * from './data/emojiPuzzles';
 export * from './data/bluffCards';
 export * from './data/tabooCards';
+export * from './data/tabooCardsTr';

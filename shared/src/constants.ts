@@ -37,7 +37,7 @@ export const GAME_MODES = [
     nameKey: 'gameModes.taboo',
     descKey: 'gameModes.tabooDesc',
     icon: '🚫',
-    locales: ['en'],
+    locales: ['en', 'tr'],
   }
 ] as const;
 
