@@ -329,19 +329,26 @@ export function Taboo({ locale }: TabooProps) {
           </div>
         </div>
 
-        {/* Timer + Scoreboard row */}
-        <div className="flex items-center justify-between mb-3 flex-shrink-0">
+        {/* Scoreboard + Timer row */}
+        <div className="flex items-center justify-between mb-2 flex-shrink-0">
           <span className="text-sm font-medium text-gray-500">
             {currentIndex + 1} {t('taboo.cardOf')} {totalCards}
           </span>
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-bold text-green-600">{score} {t('taboo.wordsGuessed')}</span>
+            <span className="text-gray-300">|</span>
+            <span className="text-sm font-bold text-orange-500">{skipped} {t('taboo.wordsSkipped')}</span>
+          </div>
+        </div>
 
-          {/* Timer widget */}
-          <div className="relative flex items-center gap-2">
-            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-sm font-bold transition-all ${timerColor}`}>
-              <Timer className="w-3.5 h-3.5" />
+        {/* Timer row */}
+        <div className="flex items-center justify-center mb-3 flex-shrink-0">
+          <div className="relative flex items-center">
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold transition-all ${timerColor}`}>
+              <Timer className="w-4 h-4" />
               <button
                 onClick={() => setShowTimerPicker(!showTimerPicker)}
-                className="hover:opacity-70 transition-opacity tabular-nums"
+                className="hover:opacity-70 transition-opacity tabular-nums text-base"
               >
                 {formatTime(timeLeft)}
               </button>
@@ -352,9 +359,9 @@ export function Taboo({ locale }: TabooProps) {
                   aria-label={timerExpired ? t('taboo.timerReset') : t('taboo.timerStart')}
                 >
                   {timerExpired ? (
-                    <RotateCcw className="w-3.5 h-3.5" />
+                    <RotateCcw className="w-4 h-4" />
                   ) : (
-                    <Play className="w-3.5 h-3.5" />
+                    <Play className="w-4 h-4" />
                   )}
                 </button>
               ) : (
@@ -363,7 +370,7 @@ export function Taboo({ locale }: TabooProps) {
                   className="ml-1 hover:opacity-70 transition-opacity"
                   aria-label={t('taboo.timerStop')}
                 >
-                  <Square className="w-3 h-3" />
+                  <Square className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
@@ -376,7 +383,7 @@ export function Taboo({ locale }: TabooProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -5, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full right-0 mt-1 bg-white rounded-xl shadow-lg border border-gray-200 p-2 z-10 min-w-[120px]"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-white rounded-xl shadow-lg border border-gray-200 p-2 z-10 min-w-[120px]"
                 >
                   {TIMER_OPTIONS.map(seconds => (
                     <button
@@ -394,12 +401,6 @@ export function Taboo({ locale }: TabooProps) {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-bold text-green-600">{score} {t('taboo.wordsGuessed')}</span>
-            <span className="text-gray-300">|</span>
-            <span className="text-sm font-bold text-orange-500">{skipped} {t('taboo.wordsSkipped')}</span>
           </div>
         </div>
 
