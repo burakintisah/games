@@ -331,46 +331,43 @@ export function Taboo({ locale }: TabooProps) {
 
         {/* Scoreboard + Timer row */}
         <div className="flex items-center justify-between mb-2 flex-shrink-0">
-          <span className="text-sm font-medium text-gray-500">
-            {currentIndex + 1} {t('taboo.cardOf')} {totalCards}
-          </span>
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-bold text-green-600">{score} {t('taboo.wordsGuessed')}</span>
-            <span className="text-gray-300">|</span>
-            <span className="text-sm font-bold text-orange-500">{skipped} {t('taboo.wordsSkipped')}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-medium text-gray-400">
+              {currentIndex + 1}/{totalCards}
+            </span>
+            <span className="text-xs font-bold text-green-600">✓{score}</span>
+            <span className="text-xs font-bold text-orange-500">✗{skipped}</span>
           </div>
-        </div>
 
-        {/* Timer row */}
-        <div className="flex items-center justify-center mb-3 flex-shrink-0">
+          {/* Timer widget */}
           <div className="relative flex items-center">
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold transition-all ${timerColor}`}>
-              <Timer className="w-4 h-4" />
+            <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-bold transition-all ${timerColor}`}>
+              <Timer className="w-3.5 h-3.5" />
               <button
                 onClick={() => setShowTimerPicker(!showTimerPicker)}
-                className="hover:opacity-70 transition-opacity tabular-nums text-base"
+                className="hover:opacity-70 transition-opacity tabular-nums text-sm"
               >
                 {formatTime(timeLeft)}
               </button>
               {!timerRunning ? (
                 <button
                   onClick={timerExpired ? resetTimer : startTimer}
-                  className="ml-1 hover:opacity-70 transition-opacity"
+                  className="ml-0.5 hover:opacity-70 transition-opacity"
                   aria-label={timerExpired ? t('taboo.timerReset') : t('taboo.timerStart')}
                 >
                   {timerExpired ? (
-                    <RotateCcw className="w-4 h-4" />
+                    <RotateCcw className="w-3.5 h-3.5" />
                   ) : (
-                    <Play className="w-4 h-4" />
+                    <Play className="w-3.5 h-3.5" />
                   )}
                 </button>
               ) : (
                 <button
                   onClick={stopTimer}
-                  className="ml-1 hover:opacity-70 transition-opacity"
+                  className="ml-0.5 hover:opacity-70 transition-opacity"
                   aria-label={t('taboo.timerStop')}
                 >
-                  <Square className="w-3.5 h-3.5" />
+                  <Square className="w-3 h-3" />
                 </button>
               )}
             </div>
@@ -383,7 +380,7 @@ export function Taboo({ locale }: TabooProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -5, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-white rounded-xl shadow-lg border border-gray-200 p-2 z-10 min-w-[120px]"
+                  className="absolute top-full right-0 mt-1 bg-white rounded-xl shadow-lg border border-gray-200 p-2 z-10 min-w-[120px]"
                 >
                   {TIMER_OPTIONS.map(seconds => (
                     <button
@@ -428,15 +425,15 @@ export function Taboo({ locale }: TabooProps) {
         </AnimatePresence>
 
         {/* Progress bar */}
-        <div className="w-full bg-gray-200 rounded-full h-1.5 mb-4 flex-shrink-0">
+        <div className="w-full bg-gray-200 rounded-full h-1 mb-3 flex-shrink-0">
           <div
-            className="bg-gradient-to-r from-purple-500 to-indigo-500 h-1.5 rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-purple-500 to-indigo-500 h-1 rounded-full transition-all duration-500"
             style={{ width: `${((currentIndex + 1) / totalCards) * 100}%` }}
           />
         </div>
 
         {/* Main card */}
-        <div className="flex-1 flex flex-col items-center justify-center min-h-0">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-0 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentCard.id}
@@ -444,100 +441,102 @@ export function Taboo({ locale }: TabooProps) {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -50, scale: 0.95 }}
               transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 20 }}
-              className="bg-white rounded-3xl shadow-lg w-full max-w-md overflow-hidden"
+              className="bg-white rounded-2xl shadow-lg w-full max-w-md overflow-hidden"
             >
               {/* Category + Difficulty header */}
-              <div className="flex items-center justify-between px-6 pt-5 pb-2">
-                <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
+              <div className="flex items-center justify-between px-4 pt-3 pb-1">
+                <span className="px-2.5 py-0.5 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
                   {categories.find(c => c.id === currentCard.category)?.icon}{' '}
                   {categories.find(c => c.id === currentCard.category)?.name}
                 </span>
-                <span className={`px-3 py-1 rounded-full text-xs font-medium ${difficultyColor}`}>
+                <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${difficultyColor}`}>
                   {t(`ui.difficulty.${currentCard.difficulty}`)}
                 </span>
               </div>
 
               {/* Target word */}
-              <div className="px-6 py-6 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              <div className="px-4 py-3 text-center">
+                <h2 className="text-2xl md:text-4xl font-bold text-gray-900">
                   {currentCard.word}
                 </h2>
               </div>
 
               {/* Taboo words */}
-              <div className="mx-6 mb-5 bg-red-50 rounded-2xl px-5 py-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg">🚫</span>
-                  <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">
+              <div className="mx-4 mb-3 bg-red-50 rounded-xl px-3 py-2.5">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <span className="text-sm">🚫</span>
+                  <span className="text-[10px] font-semibold text-red-600 uppercase tracking-wide">
                     {t('taboo.tabooWords')}
                   </span>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {currentCard.tabooWords.map((word, idx) => (
-                    <div
+                    <span
                       key={idx}
-                      className="flex items-center gap-2.5 px-3 py-2 bg-white/70 rounded-xl border border-red-200"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/80 rounded-lg border border-red-200 text-red-700 text-sm font-semibold"
                     >
-                      <span className="text-red-400 text-xs font-bold w-4 text-center">{idx + 1}</span>
-                      <span className="text-red-700 text-sm font-semibold">{word}</span>
-                    </div>
+                      {word}
+                    </span>
                   ))}
                 </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="px-5 pb-5 flex gap-3">
-                <motion.button
-                  onClick={handleSkip}
-                  className="flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-bold text-base bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 transition-all"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <SkipForward className="w-5 h-5" />
-                  {t('taboo.skip')}
-                </motion.button>
-                <motion.button
-                  onClick={handleGotIt}
-                  className="flex-1 flex items-center justify-center gap-2.5 py-4 rounded-2xl font-bold text-base bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Check className="w-5 h-5" />
-                  {t('taboo.gotIt')}
-                </motion.button>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Navigation arrows */}
-        <div className="flex items-center justify-between mt-4 flex-shrink-0">
-          <motion.button
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            className={`flex items-center gap-1.5 px-5 py-3 rounded-2xl font-semibold text-base transition-all ${
-              currentIndex === 0
-                ? 'text-gray-300 cursor-not-allowed'
-                : 'text-gray-600 bg-white/60 hover:bg-white hover:shadow-sm'
-            }`}
-            whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
-          >
-            <ChevronLeft className="w-5 h-5" />
-            {t('taboo.prevCard')}
-          </motion.button>
+        {/* Bottom controls — always visible */}
+        <div className="flex-shrink-0 pt-3 space-y-2">
+          {/* Action buttons */}
+          <div className="flex gap-3">
+            <motion.button
+              onClick={handleSkip}
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base bg-white text-orange-600 border-2 border-orange-200 hover:bg-orange-50 transition-all shadow-sm"
+              whileTap={{ scale: 0.95 }}
+            >
+              <SkipForward className="w-5 h-5" />
+              {t('taboo.skip')}
+            </motion.button>
+            <motion.button
+              onClick={handleGotIt}
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Check className="w-5 h-5" />
+              {t('taboo.gotIt')}
+            </motion.button>
+          </div>
 
-          <motion.button
-            onClick={handleNext}
-            disabled={currentIndex >= totalCards - 1}
-            className={`flex items-center gap-1.5 px-5 py-3 rounded-2xl font-semibold text-base transition-all ${
-              currentIndex >= totalCards - 1
-                ? 'text-gray-300 cursor-not-allowed'
-                : 'text-purple-600 bg-white/60 hover:bg-white hover:shadow-sm'
-            }`}
-            whileTap={currentIndex < totalCards - 1 ? { scale: 0.95 } : {}}
-          >
-            {t('taboo.nextWord')}
-            <ChevronRight className="w-5 h-5" />
-          </motion.button>
+          {/* Navigation arrows */}
+          <div className="flex items-center justify-between">
+            <motion.button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className={`flex items-center gap-1 px-3 py-2 rounded-xl font-medium text-sm transition-all ${
+                currentIndex === 0
+                  ? 'text-gray-300 cursor-not-allowed'
+                  : 'text-gray-500 hover:bg-white/60'
+              }`}
+              whileTap={currentIndex > 0 ? { scale: 0.95 } : {}}
+            >
+              <ChevronLeft className="w-4 h-4" />
+              {t('taboo.prevCard')}
+            </motion.button>
+
+            <motion.button
+              onClick={handleNext}
+              disabled={currentIndex >= totalCards - 1}
+              className={`flex items-center gap-1 px-3 py-2 rounded-xl font-medium text-sm transition-all ${
+                currentIndex >= totalCards - 1
+                  ? 'text-gray-300 cursor-not-allowed'
+                  : 'text-purple-600 hover:bg-white/60'
+              }`}
+              whileTap={currentIndex < totalCards - 1 ? { scale: 0.95 } : {}}
+            >
+              {t('taboo.nextWord')}
+              <ChevronRight className="w-4 h-4" />
+            </motion.button>
+          </div>
         </div>
       </div>
     </div>
